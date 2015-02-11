@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using SimpleRPG.States;
 using SimpleRPG.Windows;
 using SimpleRPG.Items;
+using System.Xml;
 
 namespace SimpleRPG
 {
@@ -37,30 +38,56 @@ namespace SimpleRPG
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            bool fullscreen = false;
-
-            if (fullscreen)
-            {
-                graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-
-                graphics.IsFullScreen = true;
-            }
-            else
-            {
-                graphics.PreferredBackBufferWidth = 640;
-                graphics.PreferredBackBufferHeight = 360;
-            }
-
             stateManager = new StateManager(this);
-            
-            screenWidth = graphics.PreferredBackBufferWidth;
-            screenHeight = graphics.PreferredBackBufferHeight;
+
+            loadOptions();
 
             // Adjust scale based on Scale = 1 for 640x480 resolution
             int baseWidth = 640;
 
             graphicsScale = screenWidth / baseWidth;
+        }
+
+        private void loadOptions()
+        {
+            XmlTextReader reader = new XmlTextReader("settings.xml");
+            string windowStyle = "window";
+
+            while (reader.Read())
+            {
+                if (reader.IsStartElement())
+                {
+                    if (reader.Name == "width")
+                        screenWidth = int.Parse(reader.ReadString());
+                    else if (reader.Name == "height")
+                        screenHeight = int.Parse(reader.ReadString());
+                    else if (reader.Name == "style")
+                        windowStyle = reader.ReadString();
+                }
+            }
+
+            reader.Close();
+
+            // Create a fullscreen window
+            if (windowStyle == "fullscreen")
+            {
+                screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                screenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+                graphics.IsFullScreen = true;
+            }
+            // Create a borderless window
+            else if (windowStyle == "borderless")
+            {
+                IntPtr hWnd = this.Window.Handle;
+                var control = System.Windows.Forms.Control.FromHandle(hWnd);
+                var form = control.FindForm();
+                form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            }
+            // Otherwise, a regular window will be created
+
+            graphics.PreferredBackBufferHeight = screenHeight;
+            graphics.PreferredBackBufferWidth = screenWidth;
         }
 
         /// <summary>

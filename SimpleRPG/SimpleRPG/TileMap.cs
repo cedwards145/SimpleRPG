@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System.Xml;
-using System.Xml.Linq;
+using System.Xml;
 
 namespace SimpleRPG
 {
