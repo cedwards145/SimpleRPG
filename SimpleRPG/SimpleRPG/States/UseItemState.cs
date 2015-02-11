@@ -105,7 +105,6 @@ namespace SimpleRPG.States
         public override void passData(GameState sender, object data)
         {
             Battler target = (Battler)data;
-            toUse.use(target);
             
             CombatResolver.useItemOn(target, toUse, (Player.isInBattle() ? Player.getBattle() : null));
 

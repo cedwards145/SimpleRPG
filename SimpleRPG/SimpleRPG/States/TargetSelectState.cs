@@ -19,14 +19,19 @@ namespace SimpleRPG.States
         {
             // Get list of targets
             List<string> targetNames = new List<string>();
+            bool[] battlersAlive = new bool[battlers.Count];
 
             enemies = battlers;
 
             for (int index = 0; index < battlers.Count; index++)
-                // if (battlers[index].isAlive())
-                    targetNames.Add(battlers[index].getName());
+            {
+                targetNames.Add(battlers[index].getName());
+                battlersAlive[index] = battlers[index].isAlive();
+            }
 
             targets = new ListBox(game, new Point(420 * game.getGraphicsScale(), 0), 150 * game.getGraphicsScale(), 3, targetNames.ToArray(), "windowskin");
+            targets.setEnabledOptions(battlersAlive);
+
             targets.setToBottom();
         }
 
