@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleRPG", "SimpleRPG\SimpleRPG\SimpleRPG.csproj", "{26479EAF-DE43-4F59-A1DF-C6463D475731}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleRPGContent", "SimpleRPG\SimpleRPGContent\SimpleRPGContent.contentproj", "{3142B051-D1EE-42C5-A037-030E4B2296A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26479EAF-DE43-4F59-A1DF-C6463D475731}.Debug|x86.ActiveCfg = Debug|x86
+		{26479EAF-DE43-4F59-A1DF-C6463D475731}.Debug|x86.Build.0 = Debug|x86
+		{26479EAF-DE43-4F59-A1DF-C6463D475731}.Release|x86.ActiveCfg = Release|x86
+		{26479EAF-DE43-4F59-A1DF-C6463D475731}.Release|x86.Build.0 = Release|x86
+		{3142B051-D1EE-42C5-A037-030E4B2296A8}.Debug|x86.ActiveCfg = Debug|x86
+		{3142B051-D1EE-42C5-A037-030E4B2296A8}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
