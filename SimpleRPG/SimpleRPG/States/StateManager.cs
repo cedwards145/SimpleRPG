@@ -39,6 +39,11 @@ namespace SimpleRPG.States
             return removed;
         }
 
+        public GameState getCurrentState()
+        {
+            return gameStates[gameStates.Count - 1];
+        }
+
         // Removes a given state from the list
         public GameState removeState(GameState state)
         {

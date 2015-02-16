@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace SimpleRPG
 {   
@@ -9,6 +10,7 @@ namespace SimpleRPG
     {
         protected Passability passability;
         protected int tileID;
+        protected Color tintColor = new Color(0, 0, 0, 0);
 
         public Tile(Passability reqPassability, int reqTileID)
         {
@@ -34,6 +36,17 @@ namespace SimpleRPG
         public int getTileID()
         {
             return tileID;
+        }
+
+        public Color getTint()
+        {
+            return tintColor;
+        }
+
+        // MUTATOR METHODS
+        public void tint(Color newTint)
+        {
+            tintColor = newTint;
         }
     }
 }

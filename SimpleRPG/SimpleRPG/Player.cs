@@ -70,5 +70,11 @@ namespace SimpleRPG
             inBattle = false;
             currentBattle = null;
         }
+
+        public TileMap getCurrentMap()
+        {
+            MapObject playerObject = party[0].getMapObject();
+            return playerObject.getContainingMap();
+        }
     }
 }

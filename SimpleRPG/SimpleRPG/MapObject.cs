@@ -218,6 +218,11 @@ namespace SimpleRPG
                 return location.Y - other.location.Y;
         }
 
+        public TileMap getContainingMap()
+        {
+            return containingMap;
+        }
+
         // Gets an object's location on a map, in cells
         public Point getPosition()
         {

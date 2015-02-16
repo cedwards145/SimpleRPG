@@ -436,5 +436,56 @@ namespace SimpleRPG
             return value;
         }
 
+        public void tintTile(int x, int y, Color tintColor)
+        {
+            for (int index = layerList.Count - 1; index >= 0; index--)
+            {
+                if (layerList[index] is TileLayer)
+                { 
+                    ((TileLayer)layerList[index]).tintTile(x, y, tintColor);
+                    break;
+                }
+            }
+        }
+
+        public List<Point> walk(Point startPoint, int numTiles)
+        {
+            List<Point> resultantPoints = new List<Point>();
+            List<Point> openList = new List<Point>();
+
+            openList.Add(startPoint);
+
+            int tilesAdded = 0;
+
+            while (tilesAdded < numTiles && openList.Count > 0)
+            {
+                Point p = openList[0];
+                addAdjacentPoints(p, openList, resultantPoints);
+                openList.Remove(p);
+                resultantPoints.Add(p);
+                tilesAdded++;
+            }
+
+            return resultantPoints;
+        }
+
+        private List<Point> temp = new List<Point>();
+        private void addAdjacentPoints(Point startPoint, List<Point> openList, List<Point> closedList)
+        {
+            temp.Clear();
+            temp.Add(new Point(startPoint.X - 1, startPoint.Y));
+            temp.Add(new Point(startPoint.X, startPoint.Y - 1));
+            temp.Add(new Point(startPoint.X + 1, startPoint.Y));
+            temp.Add(new Point(startPoint.X, startPoint.Y + 1));
+
+            foreach (Point p in temp)
+            {
+                // Add p to open list while it is inside the map, passable, and not already in open or closed lists
+                if (p.X >= 0 && p.X < width && p.Y >= 0 && p.Y < height && getPassability(p.X, p.Y)
+                    && (!openList.Contains(p)) && (!closedList.Contains(p)))
+                    openList.Add(p);
+            }
+        }
+
     }
 }

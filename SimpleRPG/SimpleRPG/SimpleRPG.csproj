@@ -112,6 +112,7 @@
     <Compile Include="Animation.cs" />
     <Compile Include="Battler.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Clusterer.cs" />
     <Compile Include="CombatResolver.cs" />
     <Compile Include="CombatResult.cs" />
     <Compile Include="Drawable.cs" />

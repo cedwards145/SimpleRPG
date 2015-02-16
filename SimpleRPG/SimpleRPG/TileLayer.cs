@@ -46,6 +46,8 @@ namespace SimpleRPG
             Tile currentTile = null;
             int tileX, tileY;
             
+            Color trans = new Color(0, 0, 0, 0);
+
             for (int x = firstTile.X; x < width && x < firstTile.X + tilesAcross; x++)
             {
                 for (int y = firstTile.Y; y < height && y < firstTile.Y + tilesDown; y++)
@@ -63,8 +65,23 @@ namespace SimpleRPG
                     Rectangle source = new Rectangle(tileX * tileSize, tileY * tileSize, tileSize, tileSize);
 
                     spriteBatch.Draw(tileset, destination, source, Color.White * opacity);
+
+                    Color tileTint = currentTile.getTint();
+                    if (!tileTint.Equals(trans))
+                        GraphicsHelper.fillRectangle(spriteBatch, destination, tileTint);
                 }
             }
+        }
+
+        public void tintTile(int x, int y, Color tintColor)
+        {
+            tiles[x, y].tint(tintColor);
+        }
+
+        public void clearTint()
+        {
+            foreach (Tile t in tiles)
+                t.tint(new Color(0, 0, 0, 0));
         }
     }
 }

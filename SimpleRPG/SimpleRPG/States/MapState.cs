@@ -67,5 +67,10 @@ namespace SimpleRPG.States
             camera.setOpacity(opacity);
             camera.draw(spriteBatch);
         }
+
+        public TileMap getMap()
+        {
+            return map;
+        }
     }
 }
