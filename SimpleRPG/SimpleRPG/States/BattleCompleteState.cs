@@ -11,10 +11,10 @@ namespace SimpleRPG.States
     {
         protected BattleCompleteWindow window;
 
-        public BattleCompleteState(Game1 game, GameState parent, StateManager manager)
+        public BattleCompleteState(Game1 game, GameState parent, StateManager manager, BattleState battle)
             : base(game, parent, manager)
         {
-            window = new BattleCompleteWindow(game, "windowskin");
+            window = new BattleCompleteWindow(game, "windowskin", battle.getTotalExp());
         }
 
         public override void update()

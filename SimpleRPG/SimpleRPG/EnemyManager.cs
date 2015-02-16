@@ -7,26 +7,26 @@ namespace SimpleRPG
 {
     public class EnemyManager
     {
-        private static Dictionary<string, Battler> enemies = new Dictionary<string, Battler>();
+        private static Dictionary<string, AIBattler> enemies = new Dictionary<string, AIBattler>();
 
-        public static void addEnemy(Battler newEnemy)
+        public static void addEnemy(AIBattler newEnemy)
         {
             enemies[newEnemy.getName()] = newEnemy;
         }
 
-        public static Battler getEnemy(string enemyName)
+        public static AIBattler getEnemy(string enemyName)
         {
             if (enemies.ContainsKey(enemyName))
-                return enemies[enemyName].clone();
+                return (AIBattler)enemies[enemyName].clone();
             else
                 return null;
         }
 
         public static void initialize()
         {
-            addEnemy(new AIBattler("Goblin", 30, 0, 10, 2));
+            addEnemy(new AIBattler("Goblin", 30, 0, 15, 2, 100));
+            addEnemy(new AIBattler("Troll", 70, 0, 20, 1, 300));
         }
-
 
     }
 }

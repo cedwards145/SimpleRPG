@@ -36,7 +36,7 @@ namespace SimpleRPG.States
                 // Items
                 if (menuIndex == 2)
                 {
-                    addChildState(new InventoryState(gameRef, stateManager, this, new Point(menuPosition.X + 10, menuPosition.Y + 10)));
+                    addChildState(new InventoryState(gameRef, stateManager, this));
                 }
                 // Resume
                 else if (menuIndex == 3)

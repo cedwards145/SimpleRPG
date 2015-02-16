@@ -41,7 +41,7 @@ namespace SimpleRPG.States
                 // Attack
                 if (index == 0)
                 {
-                    addChildState(new TargetSelectState(gameRef, this, newPosition, stateManager, battleState.getEnemies()));
+                    addChildState(new TargetSelectState(gameRef, this, stateManager, battleState.getEnemies()));
                 }
                 // Skill
                 else if (index == 1)
@@ -51,7 +51,7 @@ namespace SimpleRPG.States
                 // Item
                 else if (index == 2)
                 {
-                    addChildState(new InventoryState(gameRef, stateManager, this, newPosition));
+                    addChildState(new InventoryState(gameRef, stateManager, this));
                 }
             }
         }
@@ -85,5 +85,6 @@ namespace SimpleRPG.States
                 }
             }
         }
+
     }
 }

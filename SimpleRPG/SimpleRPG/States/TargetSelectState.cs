@@ -15,22 +15,24 @@ namespace SimpleRPG.States
         protected List<Battler> enemies;
 
         public TargetSelectState(Game1 game, GameState parent, StateManager manager, List<Battler> battlers)
-            : this(game, parent, new Point(), manager, battlers)
-        { }
-
-        public TargetSelectState(Game1 game, GameState parent, Point windowPosition, StateManager manager, List<Battler> battlers)
             : base(game, parent, manager)
         {
             // Get list of targets
             List<string> targetNames = new List<string>();
+            bool[] battlersAlive = new bool[battlers.Count];
 
             enemies = battlers;
 
             for (int index = 0; index < battlers.Count; index++)
-                // if (battlers[index].isAlive())
-                    targetNames.Add(battlers[index].getName());
+            {
+                targetNames.Add(battlers[index].getName());
+                battlersAlive[index] = battlers[index].isAlive();
+            }
 
-            targets = new ListBox(game, windowPosition, 150 * game.getGraphicsScale(), 3, targetNames.ToArray(), "windowskin");
+            targets = new ListBox(game, new Point(420 * game.getGraphicsScale(), 0), 150 * game.getGraphicsScale(), 3, targetNames.ToArray(), "windowskin");
+            targets.setEnabledOptions(battlersAlive);
+
+            targets.setToBottom();
         }
 
         public override void update()

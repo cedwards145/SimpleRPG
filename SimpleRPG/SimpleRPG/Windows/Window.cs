@@ -124,6 +124,25 @@ namespace SimpleRPG.Windows
         {
             setPosition(new Point(location.X, gameRef.getHeight() - height));
         }
+        /// <summary>
+        /// Center the window on the screen
+        /// </summary>
+        public void centerWindow()
+        {
+            setPosition(GraphicsHelper.calculateCenterPositionP(width, height));
+        }
+        /// <summary>
+        /// Center the window horizontally on the screen
+        /// </summary>
+        public void centerHorizontally()
+        {
+            setPosition(new Point(GraphicsHelper.calculateCenterPositionP(width, height).X, location.Y));
+        }
+
+        public void centerVertically()
+        {
+            setPosition(new Point(location.X, GraphicsHelper.calculateCenterPositionP(width, height).Y));
+        }
 
         public int getWidth()
         {
@@ -138,6 +157,23 @@ namespace SimpleRPG.Windows
         public Rectangle getSize()
         {
             return new Rectangle(location.X, location.Y, width, height);
+        }
+
+        public int left()
+        {
+            return location.X;
+        }
+        public int right()
+        {
+            return location.X + width;
+        }
+        public int top()
+        {
+            return location.Y;
+        }
+        public int bottom()
+        {
+            return location.Y + height;
         }
     }
 }

@@ -8,9 +8,16 @@ namespace SimpleRPG
 {
     public class AIBattler : Battler
     {
-        public AIBattler(string reqName, int reqMaxHP, int reqMaxMP, int reqPower, int reqWill)
+        /// <summary>
+        /// The amount of EXP a player earns for killing this battler
+        /// </summary>
+        protected int expEarned;
+
+        public AIBattler(string reqName, int reqMaxHP, int reqMaxMP, int reqPower, int reqWill, int exp)
             : base(reqName, reqMaxHP, reqMaxMP, reqPower, reqWill)
-        { }
+        {
+            expEarned = exp;
+        }
 
         public AIBattler()
             : base()
@@ -45,10 +52,19 @@ namespace SimpleRPG
             clone.power = power;
             clone.will = will;
             clone.name = name;
+            clone.expEarned = expEarned;
 
             return clone;
         }
 
+        /// <summary>
+        /// Gets the amount of EXP an AIBattler is worth
+        /// </summary>
+        /// <returns>The EXP awarded for killing this battler</returns>
+        public int getExpEarned()
+        {
+            return expEarned;
+        }
     }
 
 }

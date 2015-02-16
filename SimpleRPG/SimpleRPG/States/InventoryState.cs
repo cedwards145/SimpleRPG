@@ -16,12 +16,14 @@ namespace SimpleRPG.States
         protected ItemList itemList;
         protected ItemDescriptionWindow descriptionWindow;
 
-        public InventoryState(Game1 game, StateManager manager, GameState parent, Point windowPosition)
-            :base (game, parent, manager)
+        public InventoryState(Game1 game, StateManager manager, GameState parent)
+            : base(game, parent, manager)
         {
             playerInventory = Player.getInventory();
-            itemList = new ItemList(game, windowPosition, 300 * game.getGraphicsScale(), 7, playerInventory);
-            descriptionWindow = new ItemDescriptionWindow(game, new Point(windowPosition.X, windowPosition.Y + itemList.getHeight() - 10), 300 * game.getGraphicsScale(), 32 * game.getGraphicsScale());
+            itemList = new ItemList(game, new Point(), 300 * game.getGraphicsScale(), 7, playerInventory);
+            itemList.centerWindow();
+
+            descriptionWindow = new ItemDescriptionWindow(game, new Point(itemList.left(), itemList.bottom()), 300 * game.getGraphicsScale(), 32 * game.getGraphicsScale());
         }
 
         public override void update()

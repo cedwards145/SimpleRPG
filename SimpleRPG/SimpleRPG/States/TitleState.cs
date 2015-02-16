@@ -22,6 +22,8 @@ namespace SimpleRPG.States
             inAnimation = AnimationType.Fade;
             outAnimation = AnimationType.FadeSlow;
 
+            popOnEscape = false;
+
             listbox = new ListBox(game, new Point(), 100 * game.getGraphicsScale(), 4, new string[] {"New Game", "Load Game", "Options", "Exit" }, "windowskin");
             listbox.setPosition(GraphicsHelper.calculateCenterPositionP(listbox.getWidth(), listbox.getHeight()));
 

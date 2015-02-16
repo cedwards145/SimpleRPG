@@ -9,12 +9,13 @@ namespace SimpleRPG.Windows
 {
     public class BattleCompleteWindow : Window
     {
-        protected string text = "Battle Complete";
+        protected string text = "";
 
-        public BattleCompleteWindow(Game1 game, string windowskin)
+        public BattleCompleteWindow(Game1 game, string windowskin, int expEarned)
             : base(game, new Point(), 200 * game.getGraphicsScale(), 50 * game.getGraphicsScale(), windowskin)
         {
             location = GraphicsHelper.calculateCenterPositionP(width, height);
+            text = "Battle complete!\nEarned " + expEarned + " EXP!";
         }
 
         public override void draw(SpriteBatch spriteBatch)

@@ -12,7 +12,8 @@ namespace SimpleRPG.States
 {
     public class BattleState :  GameState
     {
-        protected List<Battler> playerParty, enemyParty, combatants;
+        protected List<Battler> playerParty, combatants;
+        protected List<AIBattler> enemyParty;
         protected Battler currentBattler;
         protected Queue<Battler> battleQueue;
         protected StateManager battleStateManager;
@@ -38,10 +39,10 @@ namespace SimpleRPG.States
             playerParty = Player.getParty();
             battleQueue = new Queue<Battler>();
 
-            enemyParty = new List<Battler>();
+            enemyParty = new List<AIBattler>();
             enemyParty.Add(EnemyManager.getEnemy("Goblin"));
-            //enemyParty.Add(EnemyManager.getEnemy("Goblin"));
-            //enemyParty.Add(EnemyManager.getEnemy("Goblin"));
+            enemyParty.Add(EnemyManager.getEnemy("Goblin"));
+            enemyParty.Add(EnemyManager.getEnemy("Troll"));
 
             combatants = new List<Battler>();
             foreach (Battler battler in playerParty)
@@ -99,7 +100,7 @@ namespace SimpleRPG.States
             battleStateManager.update();
 
             if (checkBattleEnd())
-                stateManager.addState(new BattleCompleteState(gameRef, this, stateManager));
+                stateManager.addState(new BattleCompleteState(gameRef, this, stateManager, this));
 
             foreach (Window window in windows)
             {
@@ -111,7 +112,7 @@ namespace SimpleRPG.States
                 widget.update();
             }
 
-            if (currentBattler == null && battleStateManager.isEmpty())
+            if (currentBattler == null && battleStateManager.isEmpty() && !closing)
                 nextTurn();
         }
 
@@ -160,7 +161,8 @@ namespace SimpleRPG.States
         public List<Battler> getEnemies(Battler battler)
         {
             if (playerParty.Contains(battler))
-                return enemyParty;
+                // Cast each AIBattler in enemy party to a battler
+                return enemyParty.ConvertAll(x => (Battler)x);
             else
                 return playerParty;
         }
@@ -204,6 +206,15 @@ namespace SimpleRPG.States
         public List<Battler> getAllCombatants()
         {
             return combatants;
+        }
+
+        public int getTotalExp()
+        {
+            int totalSoFar = 0;
+            foreach (AIBattler battler in enemyParty)
+                totalSoFar += battler.getExpEarned();
+
+            return totalSoFar;
         }
     }
 }

@@ -67,21 +67,20 @@ namespace SimpleRPG.States
                 Point point = new Point(itemWindow.getPosition().X + 10 * gameRef.getGraphicsScale(),
                                         itemWindow.getPosition().Y + 10 * gameRef.getGraphicsScale());
 
-                addChildState(new TargetSelectState(gameRef, this, point, stateManager, Player.getParty()));
+                addChildState(new TargetSelectState(gameRef, this, stateManager, Player.getParty()));
             }
             // Item can target both enemies and friends if the player is in a battle and the item
             // targets all 
             else if (targets == ValidTargets.All && Player.isInBattle())
             {
                 // Calculate location for the new window
-                Point point = new Point(itemWindow.getPosition().X + 10 * gameRef.getGraphicsScale(),
-                                        itemWindow.getPosition().Y + 10 * gameRef.getGraphicsScale());
+                Point point = new Point(330 * gameRef.getGraphicsScale(), 0);
 
                 // Player is in battle, so the battle state can be accessed
                 BattleState battle = Player.getBattle();
 
                 // Create the new state
-                addChildState(new TargetSelectState(gameRef, this, point, stateManager, battle.getAllCombatants()));
+                TargetSelectState state = new TargetSelectState(gameRef, this, stateManager, battle.getAllCombatants());
             }
             // Item can only target enemies if the player is in battle and the item targets enemies
             else if (targets == ValidTargets.Enemies && Player.isInBattle())
@@ -94,7 +93,7 @@ namespace SimpleRPG.States
                 BattleState battle = Player.getBattle();
 
                 // Create the new state
-                addChildState(new TargetSelectState(gameRef, this, point, stateManager, battle.getEnemies()));
+                addChildState(new TargetSelectState(gameRef, this, stateManager, battle.getEnemies()));
             }
             // Item is not usable if it only targets enemies and the player is not in battle
             else
@@ -106,7 +105,6 @@ namespace SimpleRPG.States
         public override void passData(GameState sender, object data)
         {
             Battler target = (Battler)data;
-            toUse.use(target);
             
             CombatResolver.useItemOn(target, toUse, (Player.isInBattle() ? Player.getBattle() : null));
 
