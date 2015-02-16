@@ -38,11 +38,16 @@ namespace SimpleRPG.States
                 {
                     addChildState(new InventoryState(gameRef, stateManager, this));
                 }
-                // Resume
+                // Quests
                 else if (menuIndex == 3)
+                {
+                    addChildState(new QuestLogState(gameRef, this, stateManager));
+                }
+                // Resume
+                else if (menuIndex == 4)
                     exit();
                 // Exit Game
-                else if (menuIndex == 4)
+                else if (menuIndex == 3)
                     gameRef.Exit();
             }
             else if (Input.isKeyPressed(Keys.Escape))

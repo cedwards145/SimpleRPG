@@ -132,6 +132,8 @@
     <Compile Include="Parser.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerBattler.cs" />
+    <Compile Include="Quests\Quest.cs" />
+    <Compile Include="Quests\QuestLog.cs" />
     <Compile Include="States\BattleActionSelectState.cs" />
     <Compile Include="States\BattleCompleteState.cs" />
     <Compile Include="States\BattleState.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="States\InventoryState.cs" />
     <Compile Include="States\MessageState.cs" />
+    <Compile Include="States\QuestLogState.cs" />
     <Compile Include="States\SplashScreenState.cs" />
     <Compile Include="States\TargetSelectState.cs" />
     <Compile Include="States\TitleState.cs" />

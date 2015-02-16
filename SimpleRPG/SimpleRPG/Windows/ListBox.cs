@@ -104,7 +104,7 @@ namespace SimpleRPG.Windows
                         index = 0;
                         indexOffset = 0;
                     }
-                } while (!optionStates[index + indexOffset]);
+                } while (!optionStates[index]);
             }
         }
 
@@ -123,7 +123,7 @@ namespace SimpleRPG.Windows
                         index = options.Count - 1;
                         indexOffset = (int)MathHelper.Clamp(options.Count - noOptionsInWindow, 0, options.Count);
                     }
-                } while (!optionStates[index + indexOffset]);
+                } while (!optionStates[index]);
             }
         }
 
