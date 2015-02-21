@@ -40,7 +40,7 @@ namespace SimpleRPG.States
             base.update();
             targets.update();
 
-            if (Input.isKeyPressed(Keys.Enter))
+            if (Input.isButtonPressed(Controller.ControllerButton.enter))
             {
                 int index = targets.getIndex();
                 parentState.passData(this, enemies[index]);

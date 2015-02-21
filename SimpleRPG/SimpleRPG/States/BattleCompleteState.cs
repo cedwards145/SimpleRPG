@@ -22,7 +22,7 @@ namespace SimpleRPG.States
             base.update();
             window.update();
 
-            if (!closing && Input.isKeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))
+            if (!closing && Input.isButtonPressed(Controller.ControllerButton.enter))
                 exit();
         }
 

@@ -115,6 +115,7 @@
     <Compile Include="Clusterer.cs" />
     <Compile Include="CombatResolver.cs" />
     <Compile Include="CombatResult.cs" />
+    <Compile Include="Controller.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Drawable.cs" />
     <Compile Include="DrawableLayer.cs" />

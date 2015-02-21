@@ -42,8 +42,8 @@ namespace SimpleRPG.States
                 counter++;
             }
 
-            if (Input.isKeyPressed(Microsoft.Xna.Framework.Input.Keys.Escape)
-                || Input.isKeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))
+            if (Input.isButtonPressed(Controller.ControllerButton.back)
+                || Input.isButtonPressed(Controller.ControllerButton.enter))
                 exit();
         }
 

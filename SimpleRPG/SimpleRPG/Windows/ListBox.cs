@@ -75,11 +75,11 @@ namespace SimpleRPG.Windows
         {
             base.update();
 
-            if (Input.isKeyPressed(Keys.W))
+            if (Input.isButtonPressed(Controller.ControllerButton.up))
             {
                 moveCursorUp();
             }
-            else if (Input.isKeyPressed(Keys.S))
+            else if (Input.isButtonPressed(Controller.ControllerButton.down))
             {
                 moveCursorDown();   
             }

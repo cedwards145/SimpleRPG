@@ -24,9 +24,6 @@ namespace SimpleRPG.Windows
             
             foreach (TextWidget widget in widgets)
                 widget.update();
-
-            if (Input.isKeyPressed(Microsoft.Xna.Framework.Input.Keys.K))
-                Player.getParty()[0].addHP(-95);
         }
 
         public override void draw(SpriteBatch spriteBatch)

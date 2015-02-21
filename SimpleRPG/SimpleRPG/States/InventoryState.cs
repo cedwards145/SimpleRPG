@@ -39,7 +39,7 @@ namespace SimpleRPG.States
             descriptionWindow.setDescription(selectedDescription);
             descriptionWindow.update();
 
-            if (Input.isKeyPressed(Keys.Enter) && selectedItem != null)
+            if (Input.isButtonPressed(Controller.ControllerButton.enter) && selectedItem != null)
             {
                 Point windowPos = itemList.getPosition();
                 if (selectedItem is UsableItem)

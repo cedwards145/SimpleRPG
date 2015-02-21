@@ -113,6 +113,9 @@ namespace SimpleRPG
 
             // Initialize utilities class
             Utilities.initialize(this);
+
+            // Initialize controller class
+            Controller.initialize();
             
             // Initialize graphics helper
             GraphicsHelper.setGame(this);

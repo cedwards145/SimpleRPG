@@ -36,7 +36,7 @@ namespace SimpleRPG.States
 
             int selectedIndex = itemWindow.getIndex();
 
-            if (Input.isKeyPressed(Keys.Enter))
+            if (Input.isButtonPressed(Controller.ControllerButton.enter))
             {
                 // Use
                 if (selectedIndex == 0)

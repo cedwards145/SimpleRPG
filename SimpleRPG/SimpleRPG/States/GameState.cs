@@ -42,7 +42,7 @@ namespace SimpleRPG.States
                 close();
             }
 
-            if (Input.isKeyPressed(Keys.Escape) && popOnEscape)
+            if (Input.isButtonPressed(Controller.ControllerButton.back) && popOnEscape)
                 exit();
         }
 

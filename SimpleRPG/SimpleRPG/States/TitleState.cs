@@ -35,7 +35,7 @@ namespace SimpleRPG.States
             base.update();
             listbox.update();
 
-            if (Input.isKeyPressed(Keys.Enter))
+            if (Input.isButtonPressed(Controller.ControllerButton.enter))
             {
                 int index = listbox.getIndex();
 

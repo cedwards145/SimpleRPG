@@ -17,7 +17,7 @@ namespace SimpleRPG.States
             : base(game, parent, manager)
         {
             pauseWindow = new PauseWindow(game);
-            popOnEscape = false;
+            popOnEscape = true;
 
             outAnimation = AnimationType.None;
         }
@@ -28,7 +28,7 @@ namespace SimpleRPG.States
             pauseWindow.update();
 
             int menuIndex = pauseWindow.getIndex();
-            if (Input.isKeyPressed(Keys.Enter))
+            if (Input.isButtonPressed(Controller.ControllerButton.enter))
             {
                 Point menuPosition = pauseWindow.getPosition();
 
@@ -45,8 +45,6 @@ namespace SimpleRPG.States
                 else if (menuIndex == 4)
                     gameRef.Exit();
             }
-            else if (Input.isKeyPressed(Keys.Escape))
-                exit();
         }
 
         public override void draw(SpriteBatch spriteBatch)
