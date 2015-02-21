@@ -22,9 +22,11 @@ namespace SimpleRPG
         /// </summary>
         protected Armour armour;
 
-        public PlayerBattler(string reqName, int reqMaxHP, int reqMaxMP, int reqPower, int reqWill)
+        public PlayerBattler(string reqName, int reqMaxHP, int reqMaxMP, int reqPower, int reqWill, string battlerImageName)
             : base(reqName, reqMaxHP, reqMaxMP, reqPower, reqWill)
-        { }
+        {
+            mapObject = new MapObject(Utilities.getGameRef(), battlerImageName, 0, 0);
+        }
 
         public PlayerBattler()
             : base()
@@ -50,6 +52,7 @@ namespace SimpleRPG
             clone.power = power;
             clone.will = will;
             clone.name = name;
+            clone.mapObject = mapObject;
 
             return clone;
         }

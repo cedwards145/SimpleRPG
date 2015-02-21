@@ -19,6 +19,7 @@ namespace SimpleRPG.States
         protected StateManager battleStateManager;
         protected List<Window> windows;
         protected List<TextWidget> widgets;
+        protected List<MapObject> addedToMap;
 
         public BattleState(Game1 game, GameState parent, StateManager manager)
             :base(game, parent, manager)
@@ -38,11 +39,76 @@ namespace SimpleRPG.States
             // Set up the battle queue
             playerParty = Player.getParty();
             battleQueue = new Queue<Battler>();
+            addedToMap = new List<MapObject>();
 
             enemyParty = new List<AIBattler>();
             enemyParty.Add(EnemyManager.getEnemy("Goblin"));
             enemyParty.Add(EnemyManager.getEnemy("Goblin"));
             enemyParty.Add(EnemyManager.getEnemy("Troll"));
+
+            // Get the points to spawn MapObjects
+            TileMap map = Player.getCurrentMap();
+            Point playerPos = Player.getPlayerMapObject().getPosition();
+            List<Point> battleSpace = map.walk(playerPos, 20);
+
+            // Generate clusters
+            List<Point>[] clusters = Clusterer.cluster(battleSpace);
+
+            List<Point> playerSpace, enemySpace;
+
+            if (clusters[0].Contains(playerPos))
+            {
+                playerSpace = clusters[0];
+                enemySpace = clusters[1];
+            }
+            else
+            {
+                playerSpace = clusters[1];
+                enemySpace = clusters[0];
+            }
+
+            // DEBUG 
+            // tint possible tiles
+            Color tintColor = Color.Green * 0.5f;
+            foreach (Point p in playerSpace)
+                map.tintTile(p.X, p.Y, tintColor);
+            
+            tintColor = Color.Red * 0.5f;
+            foreach (Point p in enemySpace)
+                map.tintTile(p.X, p.Y, tintColor);
+
+            Random random = Utilities.getRandom();
+
+            // Remove Player's character's location
+            playerSpace.Remove(playerPos);
+
+            // Place player party
+            foreach (Battler battler in playerParty)
+            {
+                MapObject o = battler.getMapObject();
+                // Check the battler doesn't already have a mapobject on the current map
+                if (!o.isOnMap(map))
+                {
+                    map.addObject(o);
+                    int positionIndex = random.Next(playerSpace.Count);
+                    Point position = playerSpace[positionIndex];
+                    o.setPosition(position.X, position.Y);
+                    playerSpace.RemoveAt(positionIndex);
+                    addedToMap.Add(o);
+                }
+            }
+
+            // Create Enemy map objects
+            foreach (Battler battler in enemyParty)
+            {
+                Point position = enemySpace[random.Next(enemySpace.Count)];
+                enemySpace.Remove(position);
+                MapObject o = new MapObject(game, "enemy", position.X, position.Y);
+                o.face(playerPos);
+                map.addObject(o);
+                addedToMap.Add(o);
+                battler.setMapObject(o);
+            }
 
             combatants = new List<Battler>();
             foreach (Battler battler in playerParty)
@@ -215,6 +281,14 @@ namespace SimpleRPG.States
                 totalSoFar += battler.getExpEarned();
 
             return totalSoFar;
+        }
+
+        public override void exit()
+        {
+            base.exit();
+            TileMap map = Player.getCurrentMap();
+            foreach (MapObject mapObject in addedToMap)
+                map.removeObject(mapObject);
         }
     }
 }

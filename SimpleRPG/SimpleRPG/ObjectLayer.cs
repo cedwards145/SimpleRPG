@@ -27,6 +27,11 @@ namespace SimpleRPG
             objects.Add(toAdd);
         }
 
+        public void removeObject(MapObject toRemove)
+        {
+            objects.Remove(toRemove);
+        }
+
         public override void update()
         {
             base.update();

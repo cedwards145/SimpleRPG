@@ -400,6 +400,12 @@ namespace SimpleRPG
             objectLayer.addObject(toAdd);
         }
 
+        public void removeObject(MapObject toRemove)
+        {
+            toRemove.setContainingMap(null);
+            objectLayer.removeObject(toRemove);
+        }
+
         // ACCESSOR METHODS
         public int getWidth()
         {

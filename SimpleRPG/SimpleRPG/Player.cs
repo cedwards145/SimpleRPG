@@ -18,14 +18,10 @@ namespace SimpleRPG
 
         public static void initialize(Game1 game)
         {
-            PlayerBattler battler = new PlayerBattler("Mage", 100, 150, 12, 50);
-            MapObject o = new MapObject(game, "player", 0, 0);
-            battler.setMapObject(o);
+            PlayerBattler battler = new PlayerBattler("Mage", 100, 150, 12, 50, "player");
             party.Add(battler);
 
-            battler = new PlayerBattler("Berserker", 200, 0, 20, 20);
-            o = new MapObject(game, "npc", 0, 0);
-            //battler.setMapObject(o);
+            battler = new PlayerBattler("Berserker", 200, 0, 20, 20, "npc");
             party.Add(battler);
         }
 
@@ -71,10 +67,15 @@ namespace SimpleRPG
             currentBattle = null;
         }
 
-        public TileMap getCurrentMap()
+        public static TileMap getCurrentMap()
         {
             MapObject playerObject = party[0].getMapObject();
             return playerObject.getContainingMap();
+        }
+
+        public static MapObject getPlayerMapObject()
+        {
+            return party[0].getMapObject();
         }
     }
 }

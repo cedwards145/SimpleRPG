@@ -40,7 +40,10 @@ namespace SimpleRPG
 
         public Color getTint()
         {
-            return tintColor;
+            if (Debug.tintTiles())
+                return tintColor;
+            else
+                return new Color(0, 0, 0, 0);
         }
 
         // MUTATOR METHODS

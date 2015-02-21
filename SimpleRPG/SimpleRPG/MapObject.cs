@@ -147,6 +147,23 @@ namespace SimpleRPG
             }
         }
 
+        public void face(Point point)
+        {
+            int xDelta = Math.Abs(location.X - point.X);
+            int yDelta = Math.Abs(location.Y - point.Y);
+
+            if (xDelta > yDelta)
+                if (location.X - point.X < 0)
+                    facing = Facing.Right;
+                else
+                    facing = Facing.Left;
+            else
+                if (location.Y - point.Y < 0)
+                    facing = Facing.Down;
+                else
+                    facing = Facing.Up;
+        }
+
         public static Point facingToPoint(Facing face)
         {
             switch (face)
@@ -262,6 +279,11 @@ namespace SimpleRPG
         public Passability getPassability()
         {
             return passability;
+        }
+
+        public bool isOnMap(TileMap map)
+        {
+            return map == containingMap;
         }
     }
 }
