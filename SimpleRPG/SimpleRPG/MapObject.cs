@@ -240,17 +240,27 @@ namespace SimpleRPG
             return containingMap;
         }
 
-        // Gets an object's location on a map, in cells
+        /// <summary>
+        /// Gets the position of a MapObject on its containing Map
+        /// </summary>
+        /// <returns>Position, in map cells</returns>
         public Point getPosition()
         {
             return location;
         }
 
+        /// <summary>
+        /// Gets the position of a MapObject in pixels, including any offsetting done by
+        /// animation
+        /// </summary>
+        /// <returns>Screen position of a MapObject, before any camera transforms are applied</returns>
         public Point getAbsolutePosition()
         {
-            int tileSize = containingMap.getTileSize();
-            
-            return new Point((location.X + offset.X) * tileSize, (location.Y + offset.Y) * tileSize);
+            int tileSize = 0;
+            if (containingMap != null)
+                tileSize = containingMap.getTileSize();
+
+            return new Point((int)((location.X + offset.X / 4.0f) * tileSize), (int)((location.Y + offset.Y / 4.0f) * tileSize));
         }
 
         // Gets the object's draw location, ie, it's position in cells multiplied
@@ -281,9 +291,23 @@ namespace SimpleRPG
             return passability;
         }
 
+        /// <summary>
+        /// Gets the dimensions of a MapObject's sprite
+        /// </summary>
+        /// <returns>Vector containing sprite's width and height</returns>
+        public Vector2 getSpriteSize()
+        {
+            return new Vector2(spritesheet.Width / 4, spritesheet.Height / 4);
+        }
+
         public bool isOnMap(TileMap map)
         {
             return map == containingMap;
+        }
+
+        public void setSpritesheet(string sheetName)
+        {
+            spritesheet = Utilities.getGameRef().Content.Load<Texture2D>(@"graphics\" + sheetName);
         }
     }
 }

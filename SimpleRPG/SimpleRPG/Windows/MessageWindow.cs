@@ -42,7 +42,8 @@ namespace SimpleRPG.Windows
         {
             base.draw(spriteBatch);
             string messageSubString = message.Substring(0, messageLength);
-            spriteBatch.DrawString(font, messageSubString, new Vector2(location.X + 10, location.Y + 10), Color.White * opacity);
+            spriteBatch.DrawString(font, messageSubString, new Vector2(location.X + 10, location.Y + 10), 
+                                   ColorScheme.mainTextColor * opacity);
         }
     }
 }

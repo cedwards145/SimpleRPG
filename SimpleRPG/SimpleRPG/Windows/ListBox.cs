@@ -12,7 +12,7 @@ namespace SimpleRPG.Windows
     {
         protected List<string> options;
         protected int index = 0, indexOffset = 0, noOptionsInWindow;
-        protected static Color selectedColor = new Color(50, 190, 255), disabledColor = new Color(100, 100, 100);
+        
         protected TextAlign textAlign = TextAlign.Right;
         protected List<bool> optionStates;
 
@@ -62,8 +62,8 @@ namespace SimpleRPG.Windows
                                                location.Y + 10 * scale + (charHeight * optionsIndex));
                 }
 
-                Color color = (optionsIndex + indexOffset == index ? selectedColor : textColor);
-                color = (optionStates[optionsIndex + indexOffset] ? color : disabledColor);
+                Color color = (optionsIndex + indexOffset == index ? ColorScheme.selectedTextColor : ColorScheme.mainTextColor);
+                color = (optionStates[optionsIndex + indexOffset] ? color : ColorScheme.disabledColor);
 
                 spriteBatch.DrawString(font, options[optionsIndex + indexOffset],
                                        drawPosition,

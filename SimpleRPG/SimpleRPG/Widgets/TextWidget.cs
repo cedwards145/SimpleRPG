@@ -7,11 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SimpleRPG.Widgets
 {
-    public class TextWidget : Drawable
+    public class TextWidget : Widget
     {
         protected string text = "";
         protected SpriteFont font;
-        protected Vector2 position;
         protected Color color;
 
         protected Color flashColor, oldColor, startColor;
@@ -23,6 +22,7 @@ namespace SimpleRPG.Widgets
         {   }
 
         public TextWidget(SpriteFont reqFont, Color reqColor, Vector2 reqPosition, string reqText)
+            : base()
         {
             font = reqFont;
             color = reqColor;
@@ -91,6 +91,12 @@ namespace SimpleRPG.Widgets
             }
         }
 
+        public void setColor(Color newColor)
+        {
+            stopFlash();
+            color = newColor;
+        }
+
         public void stopFlash()
         {
             if (flashing)
@@ -98,11 +104,6 @@ namespace SimpleRPG.Widgets
                 color = startColor;
                 flashing = false;
             }
-        }
-
-        public void setPosition(Vector2 pos)
-        {
-            position = pos;
         }
 
     }

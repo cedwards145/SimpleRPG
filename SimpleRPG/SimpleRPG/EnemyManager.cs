@@ -24,7 +24,7 @@ namespace SimpleRPG
 
         public static void initialize()
         {
-            addEnemy(new AIBattler("Goblin", 30, 0, 15, 2, 100));
+            addEnemy(new AIBattler("Goblin", 30, 0, 15, 2, 120));
             addEnemy(new AIBattler("Troll", 70, 0, 20, 1, 300));
         }
 

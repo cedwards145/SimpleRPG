@@ -18,8 +18,10 @@ namespace SimpleRPG.States
         protected Queue<Battler> battleQueue;
         protected StateManager battleStateManager;
         protected List<Window> windows;
-        protected List<TextWidget> widgets;
         protected List<MapObject> addedToMap;
+        protected PlayerBattleStatusWindow statusWindow;
+        protected Battler highlightedBattler = null;
+        protected Texture2D cursorTexture;
 
         public BattleState(Game1 game, GameState parent, StateManager manager)
             :base(game, parent, manager)
@@ -28,7 +30,7 @@ namespace SimpleRPG.States
             inAnimation = AnimationType.Fade;
             popOnEscape = false;
 
-            widgets = new List<TextWidget>();
+            cursorTexture = gameRef.Content.Load<Texture2D>(@"graphics\cursor");
 
             // Add battle information to Player class
             Player.enterBattle(this);
@@ -124,7 +126,7 @@ namespace SimpleRPG.States
 
             windows = new List<Window>();
 
-            PlayerBattleStatusWindow statusWindow = new PlayerBattleStatusWindow(game, new Point(), "windowskin");
+            statusWindow = new PlayerBattleStatusWindow(game, new Point(), "windowskin");
             statusWindow.setToBottom();
             statusWindow.setToLeft();
             windows.Add(statusWindow);
@@ -151,10 +153,22 @@ namespace SimpleRPG.States
                 window.draw(spriteBatch);
             }
 
-            foreach (TextWidget widget in widgets)
+            // Draw cursor over highlighted battler
+            if (highlightedBattler != null)
             {
-                widget.setOpacity(opacity);
-                widget.draw(spriteBatch);
+                MapObject mapObject = highlightedBattler.getMapObject();
+                if (mapObject != null)
+                {
+                    Camera camera = gameRef.getCamera();
+
+                    Point objectPosition = mapObject.getAbsolutePosition();
+                    Point cursorPos = camera.transformPoint(objectPosition);
+                    cursorPos.Y -= (int)mapObject.getSpriteSize().Y;
+
+                    spriteBatch.Draw(cursorTexture, new Rectangle(cursorPos.X * scale, cursorPos.Y * scale,
+                                                                  cursorTexture.Width * scale, cursorTexture.Height * scale), 
+                                                                  Color.White * opacity);
+                }
             }
 
             battleStateManager.draw(spriteBatch);
@@ -163,6 +177,9 @@ namespace SimpleRPG.States
         public override void update()
         {
             base.update();
+
+            highlightBattler(currentBattler);
+
             battleStateManager.update();
 
             if (checkBattleEnd())
@@ -173,13 +190,13 @@ namespace SimpleRPG.States
                 window.update();
             }
 
-            foreach (TextWidget widget in widgets)
-            {
-                widget.update();
-            }
-
             if (currentBattler == null && battleStateManager.isEmpty() && !closing)
                 nextTurn();
+        }
+
+        public void highlightBattler(Battler toHighlight)
+        {
+            highlightedBattler = toHighlight;
         }
 
         /// <summary>
@@ -206,6 +223,17 @@ namespace SimpleRPG.States
                 battleQueue.Enqueue(currentBattler);
                 currentBattler = battleQueue.Dequeue();
             }
+
+            // If the next battler is player controlled, highlight it in the
+            // player status window
+            if (currentBattler is PlayerBattler)
+            {
+                int index = playerParty.IndexOf(currentBattler);
+                statusWindow.setSelectedBattler(index);
+            }
+            else
+                statusWindow.setSelectedBattler(-1);
+
             currentBattler.takeTurn(this);
         }
 
@@ -264,7 +292,15 @@ namespace SimpleRPG.States
 
         public void showCombatResult(CombatResult result)
         {
-            NumberWidget widget = new NumberWidget(gameRef.getFont(), Color.White, new Vector2(100, 100), result.damageDealt);
+            MapObject mapObject = result.defender.getMapObject();
+
+            // Get the map object's position in screen coords
+            Point objectPos = gameRef.getCamera().transformPoint(mapObject.getAbsolutePosition());
+
+            if (!result.defender.isAlive())
+                mapObject.setSpritesheet("enemy down");
+
+            NumberWidget widget = new NumberWidget(gameRef.getFont(), Color.White, new Vector2(objectPos.X, objectPos.Y), result.damageDealt);
             widgets.Add(widget);
             showCombatResult(result.ToString());
         }

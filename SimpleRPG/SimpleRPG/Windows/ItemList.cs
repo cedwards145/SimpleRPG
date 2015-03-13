@@ -38,7 +38,7 @@ namespace SimpleRPG.Windows
 
             for (int optionsIndex = 0; optionsIndex < noOptionsInWindow && optionsIndex < options.Count; optionsIndex++)
             {
-                Color color = (optionsIndex + indexOffset == index ? selectedColor : textColor);
+                Color color = (optionsIndex + indexOffset == index ? ColorScheme.selectedTextColor : ColorScheme.mainTextColor);
 
                 string quantityString = "x" + itemContainer.numberOfItem(options[optionsIndex + indexOffset]);
                 float stringWidth = font.MeasureString(quantityString).X;

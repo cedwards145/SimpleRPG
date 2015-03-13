@@ -40,9 +40,14 @@ namespace SimpleRPG.States
             base.update();
             targets.update();
 
+            int index = targets.getIndex();
+
+            // If player is in a battle, get the current battler selected, and highlight it 
+            if (Player.isInBattle())
+                Player.getBattle().highlightBattler(enemies[index]);
+
             if (Input.isButtonPressed(Controller.ControllerButton.enter))
             {
-                int index = targets.getIndex();
                 parentState.passData(this, enemies[index]);
             }
         }

@@ -15,7 +15,7 @@ namespace SimpleRPG.Windows
         protected Texture2D skin;
         protected SpriteFont font;
         protected Game1 gameRef;
-        protected Color textColor;
+        
 
         public Window(Game1 game, Point reqPosition, int reqWidth, int reqHeight, string windowskin)
         {
@@ -27,8 +27,6 @@ namespace SimpleRPG.Windows
             skin = game.Content.Load<Texture2D>(@"graphics\" + windowskin);
 
             font = game.getFont();
-
-            textColor = Color.White;
         }
 
         public override void update()
@@ -85,6 +83,11 @@ namespace SimpleRPG.Windows
 
 
             }
+        }
+
+        protected void drawRepeated()
+        {
+
         }
 
         public Point getPosition()

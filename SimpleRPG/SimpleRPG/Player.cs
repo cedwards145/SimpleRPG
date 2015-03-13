@@ -9,7 +9,6 @@ namespace SimpleRPG
 {
     public class Player
     {
-        
         protected static ItemContainer inventory = new ItemContainer();
         protected static List<Battler> party = new List<Battler>();
 
@@ -18,10 +17,10 @@ namespace SimpleRPG
 
         public static void initialize(Game1 game)
         {
-            PlayerBattler battler = new PlayerBattler("Mage", 100, 150, 12, 50, "player");
+            PlayerBattler battler = new PlayerBattler("Mage", 6500, 3000, 200, 400, "player");
             party.Add(battler);
 
-            battler = new PlayerBattler("Berserker", 200, 0, 20, 20, "npc");
+            battler = new PlayerBattler("Berserker", 9999, 0, 500, 200, "npc");
             party.Add(battler);
         }
 

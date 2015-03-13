@@ -37,27 +37,27 @@ namespace SimpleRPG
         }
 
         // ACCESSOR METHODS
-        public int getHP()
+        public virtual int getHP()
         {
             return currentHP;
         }
-        public int getMaxHP()
+        public virtual int getMaxHP()
         {
             return hp;
         }
-        public int getMP()
+        public virtual int getMP()
         {
             return currentMP;
         }
-        public int getMaxMP()
+        public virtual int getMaxMP()
         {
             return mp;
         }
-        public int getPower()
+        public virtual int getPower()
         {
             return power;
         }
-        public int getWill()
+        public virtual int getWill()
         {
             return will;
         }
@@ -86,12 +86,12 @@ namespace SimpleRPG
             double randomModifier = random.Next(30) + 85;
             randomModifier /= 100;
             
-            return (int)(power * DAMAGE_SCALING * criticalModifier * randomModifier);
+            return (int)(getPower() * DAMAGE_SCALING * criticalModifier * randomModifier);
         }
 
         public virtual int defend()
         {
-            return (int)(power * 2/3 * DAMAGE_SCALING);
+            return (int)(getPower() * 2/3 * DAMAGE_SCALING);
         }
 
         /// <summary>
@@ -150,6 +150,12 @@ namespace SimpleRPG
         public void setMapObject(MapObject o)
         {
             mapObject = o;
+        }
+
+        public void fullHeal()
+        {
+            currentHP = hp;
+            currentMP = mp;
         }
     }
 }

@@ -201,10 +201,10 @@ namespace SimpleRPG
 
         public GameState getFirstGameState()
         {
-            TileMap map = new TileMap(this, "map");
+            TileMap map = new TileMap(this, "cave");
             player = Player.getParty()[0].getMapObject();
 
-            player.setPosition(2, 3);
+            player.setPosition(8, 0);
             map.addObject(player);
 
             camera = new Camera(screenWidth, screenHeight);

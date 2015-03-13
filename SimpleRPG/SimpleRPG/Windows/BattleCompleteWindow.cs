@@ -24,7 +24,8 @@ namespace SimpleRPG.Windows
 
             Vector2 size = font.MeasureString(text);
 
-            spriteBatch.DrawString(font, text, GraphicsHelper.centerTextP(font, text, getSize()), Color.White * opacity);
+            spriteBatch.DrawString(font, text, GraphicsHelper.centerTextP(font, text, getSize()), 
+                                                                          ColorScheme.mainTextColor * opacity);
         }
     }
 }

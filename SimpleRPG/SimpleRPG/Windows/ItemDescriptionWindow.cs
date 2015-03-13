@@ -19,7 +19,8 @@ namespace SimpleRPG.Windows
         {
             base.draw(spriteBatch);
             spriteBatch.DrawString(font, description, new Vector2(location.X + 15 * gameRef.getGraphicsScale(),
-                                                                  GraphicsHelper.centerTextP(font, description, getSize()).Y), Color.White * opacity);
+                                                                  GraphicsHelper.centerTextP(font, description, getSize()).Y),
+                                                                                             ColorScheme.mainTextColor* opacity);
         }
 
         public void setDescription(string newDescription)

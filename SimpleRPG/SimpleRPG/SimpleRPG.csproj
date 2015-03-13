@@ -113,6 +113,7 @@
     <Compile Include="Battler.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Clusterer.cs" />
+    <Compile Include="ColorScheme.cs" />
     <Compile Include="CombatResolver.cs" />
     <Compile Include="CombatResult.cs" />
     <Compile Include="Controller.cs" />
@@ -148,10 +149,13 @@
     <Compile Include="States\TitleState.cs" />
     <Compile Include="States\UseItemState.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Widgets\BarWidget.cs" />
+    <Compile Include="Widgets\ExpBarWidget.cs" />
     <Compile Include="Widgets\MPWidget.cs" />
     <Compile Include="Widgets\HPWidget.cs" />
     <Compile Include="Widgets\NumberWidget.cs" />
     <Compile Include="Widgets\TextWidget.cs" />
+    <Compile Include="Widgets\Widget.cs" />
     <Compile Include="Windows\BattleCompleteWindow.cs" />
     <Compile Include="Windows\EnemyBattleStatusWindow.cs" />
     <Compile Include="Windows\ItemDescriptionWindow.cs" />
@@ -213,6 +217,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="content\cave.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="content\map.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using SimpleRPG.Widgets;
 
 namespace SimpleRPG.States
 {
@@ -16,12 +17,18 @@ namespace SimpleRPG.States
         protected AnimationType inAnimation = AnimationType.Fade, outAnimation = AnimationType.Fade;
         protected bool closing = false, open = false;
         protected GameState parentState;
+        protected List<Widget> widgets;
+        private List<Widget> widgetsToRemove;
 
         public GameState(Game1 game, GameState parent, StateManager manager)
             : base()
         {
             gameRef = game;
             stateManager = manager;
+
+            widgets = new List<Widget>();
+            widgetsToRemove = new List<Widget>();
+
             setOpacity(0);
 
             parentState = parent;
@@ -37,6 +44,19 @@ namespace SimpleRPG.States
                 open = true;
             }
 
+            widgetsToRemove.Clear();
+            // Update all widgets
+            foreach (Widget widget in widgets)
+            {
+                widget.update();
+                if (widget.removable())
+                    widgetsToRemove.Add(widget);
+            }
+
+            // Remove un-needed widgets
+            foreach (Widget widget in widgetsToRemove)
+                widgets.Remove(widget);
+
             if (closing && opacity <= 0.0f)
             {
                 close();
@@ -44,6 +64,17 @@ namespace SimpleRPG.States
 
             if (Input.isButtonPressed(Controller.ControllerButton.back) && popOnEscape)
                 exit();
+        }
+
+        public override void draw(SpriteBatch spriteBatch)
+        {
+            base.draw(spriteBatch);
+
+            foreach (Widget widget in widgets)
+            {
+                widget.setOpacity(opacity);
+                widget.draw(spriteBatch);
+            }
         }
 
         // Called as a state begins to exit
