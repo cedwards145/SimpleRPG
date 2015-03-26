@@ -32,8 +32,5 @@ namespace SimpleRPG
     /// </summary>
     public enum TextAlign { Center, Left, Right }
 
-    /// <summary>
-    /// Describes how the game's window should be set up
-    /// </summary>
-    public enum DisplayMode { Fullscreen, Window, BorderlessWindow }
+
 }
