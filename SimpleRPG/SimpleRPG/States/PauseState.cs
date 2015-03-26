@@ -19,7 +19,7 @@ namespace SimpleRPG.States
             pauseWindow = new PauseWindow(game);
             popOnEscape = true;
 
-            outAnimation = AnimationType.None;
+            outAnimation = WindowAnimationType.None;
         }
 
         public override void update()

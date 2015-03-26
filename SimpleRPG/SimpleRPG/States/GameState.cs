@@ -14,7 +14,7 @@ namespace SimpleRPG.States
         protected Game1 gameRef;
         protected StateManager stateManager;
         protected bool popOnEscape = true;
-        protected AnimationType inAnimation = AnimationType.Fade, outAnimation = AnimationType.Fade;
+        protected WindowAnimationType inAnimation = WindowAnimationType.Fade, outAnimation = WindowAnimationType.Fade;
         protected bool closing = false, open = false;
         protected GameState parentState;
         protected List<Widget> widgets;
@@ -40,7 +40,7 @@ namespace SimpleRPG.States
 
             if (!open)
             {
-                Animation.animateIn(this, inAnimation);
+                WindowAnimation.animateIn(this, inAnimation);
                 open = true;
             }
 
@@ -82,7 +82,7 @@ namespace SimpleRPG.States
         {
             if (parentState != null)
                 parentState.setOpacity(1);
-            Animation.animateOut(this, outAnimation);
+            WindowAnimation.animateOut(this, outAnimation);
             closing = true;
         }
         

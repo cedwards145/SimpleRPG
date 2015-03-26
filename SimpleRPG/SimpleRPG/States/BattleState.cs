@@ -27,7 +27,7 @@ namespace SimpleRPG.States
             :base(game, parent, manager)
         {
             // Set up state specific settings
-            inAnimation = AnimationType.Fade;
+            inAnimation = WindowAnimationType.Fade;
             popOnEscape = false;
 
             cursorTexture = gameRef.Content.Load<Texture2D>(@"graphics\cursor");
@@ -138,6 +138,7 @@ namespace SimpleRPG.States
                 enemyWindow = new EnemyBattleStatusWindow(game, new Point(game.getWidth() - (75 * scale), (5 + enemyIndex * 7) * scale), current);
                 windows.Add(enemyWindow);
             }
+
         }
 
         public override void draw(SpriteBatch spriteBatch)

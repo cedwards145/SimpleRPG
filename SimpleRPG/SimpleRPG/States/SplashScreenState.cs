@@ -21,8 +21,8 @@ namespace SimpleRPG.States
             texture = game.Content.Load<Texture2D>(@"graphics\" + imageName);
             followingState = nextState;
 
-            inAnimation = AnimationType.FadeSlow;
-            outAnimation = AnimationType.FadeSlow;
+            inAnimation = WindowAnimationType.FadeSlow;
+            outAnimation = WindowAnimationType.FadeSlow;
         }
 
         public override void update()

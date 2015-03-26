@@ -19,8 +19,8 @@ namespace SimpleRPG.States
         public TitleState(Game1 game, StateManager manager)
             : base(game, null, manager)
         {
-            inAnimation = AnimationType.Fade;
-            outAnimation = AnimationType.FadeSlow;
+            inAnimation = WindowAnimationType.Fade;
+            outAnimation = WindowAnimationType.FadeSlow;
 
             popOnEscape = false;
 

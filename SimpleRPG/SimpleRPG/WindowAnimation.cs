@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SimpleRPG
 {
-    public enum AnimationType { None, Fade, FadeSlow };
+    public enum WindowAnimationType { None, Fade, FadeSlow };
 
-    public class Animation
+    public class WindowAnimation
     {
         private static int defaultFramesPerAnim = 10;
 
@@ -40,31 +40,31 @@ namespace SimpleRPG
             drawable.setOpacity(0);
         }
 
-        public static void animateIn(Drawable drawable, AnimationType animation)
+        public static void animateIn(Drawable drawable, WindowAnimationType animation)
         {
             animateIn(drawable, animation, 30);
         }
-        public static void animateIn(Drawable drawable, AnimationType animation, int frames)
+        public static void animateIn(Drawable drawable, WindowAnimationType animation, int frames)
         {
-            if (animation == AnimationType.Fade)
+            if (animation == WindowAnimationType.Fade)
                 fadeIn(drawable);
-            else if (animation == AnimationType.FadeSlow)
+            else if (animation == WindowAnimationType.FadeSlow)
                 fadeIn(drawable, defaultFramesPerAnim * 4);
-            else if (animation == AnimationType.None)
+            else if (animation == WindowAnimationType.None)
                 noneIn(drawable);
         }
 
-        public static void animateOut(Drawable drawable, AnimationType animation)
+        public static void animateOut(Drawable drawable, WindowAnimationType animation)
         {
             animateOut(drawable, animation, 30);
         }
-        public static void animateOut(Drawable drawable, AnimationType animation, int frames)
+        public static void animateOut(Drawable drawable, WindowAnimationType animation, int frames)
         {
-            if (animation == AnimationType.Fade)
+            if (animation == WindowAnimationType.Fade)
                 fadeOut(drawable);
-            else if (animation == AnimationType.FadeSlow)
+            else if (animation == WindowAnimationType.FadeSlow)
                 fadeOut(drawable, defaultFramesPerAnim * 4);
-            else if (animation == AnimationType.None)
+            else if (animation == WindowAnimationType.None)
                 noneOut(drawable);
         }
     }
