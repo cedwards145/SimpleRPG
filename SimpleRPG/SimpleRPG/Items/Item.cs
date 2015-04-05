@@ -21,19 +21,27 @@ namespace SimpleRPG.Items
         protected string description;
 
         /// <summary>
-        /// The icon to be displayed with an item
+        /// The iconset that contains the item's icon
         /// </summary>
-        protected Texture2D icon;
+        protected Texture2D iconSet;
+
+        /// <summary>
+        /// The index of the item's icon in the iconset
+        /// </summary>
+        protected int iconIndex;
 
         /// <summary>
         /// Basic constructor
         /// </summary>
         /// <param name="itemName">The new item's name</param>
         /// <param name="itemDescription">The new item's description</param>
-        public Item(string itemName, string itemDescription)
+        public Item(string itemName, string itemDescription, int itemIconIndex)
         {
             name = itemName;
             description = itemDescription;
+            iconIndex = itemIconIndex;
+
+            iconSet = Utilities.getGameRef().Content.Load<Texture2D>(@"graphics\icons");
         }
 
         /// <summary>
@@ -44,7 +52,8 @@ namespace SimpleRPG.Items
         {
             name = i.name;
             description = i.description;
-            icon = i.icon;
+            iconSet = i.iconSet;
+            iconIndex = i.iconIndex;
         }
 
         /// <summary>
@@ -63,6 +72,16 @@ namespace SimpleRPG.Items
         public string getDescription()
         {
             return description;
+        }
+
+        public Texture2D getIconSet()
+        {
+            return iconSet;
+        }
+
+        public int getIconIndex()
+        {
+            return iconIndex;
         }
     }
 }

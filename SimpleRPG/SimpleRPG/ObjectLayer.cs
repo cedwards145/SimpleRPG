@@ -58,5 +58,10 @@ namespace SimpleRPG
 
             return Passability.Ignore;
         }
+
+        public List<MapObject> getObjects()
+        {
+            return objects;
+        }
     }
 }

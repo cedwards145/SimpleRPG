@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System.Xml;
-using System.Xml;
+using Microsoft.Xna.Framework.Input;
 
 namespace SimpleRPG
 {
@@ -15,143 +15,26 @@ namespace SimpleRPG
         private int width, height, tileSize, tilesPerRow;
 
         private List<DrawableLayer> layerList;
-        private Texture2D tileset;
+        private Texture2D tileset, light;
         private ObjectLayer objectLayer;
+        protected Game1 gameRef;
+        protected Color ambientLight;
 
-        // Read a map from a .tmx XML file
-        /*
-        public TileMap(Game game, string filename)
-        {
-            // Set up lists
-            layerList = new List<DrawableLayer>();
-
-            // Create XML Reader and read to the map element
-            XmlReader reader = XmlReader.Create(@"content\" + filename + ".tmx");
-
-            reader.ReadToFollowing("map");
-
-            // Parse the width, height and tilesize from <map>'s attributes
-            width = int.Parse(reader.GetAttribute("width"));
-            height = int.Parse(reader.GetAttribute("height"));
-            tileSize = int.Parse(reader.GetAttribute("tilewidth"));
-
-            Passability[] tilePass = new Passability[1];
-
-            bool objectLayerSeen = false;
-
-            int tileOffset = 0;
-
-            // Parse the remaining elements
-            // WARNING! Only supports 1 tileset per map!
-            string elementName = "";
-            while (reader.Read())
-            {
-                // Only check for start elements
-                if (reader.IsStartElement())
-                {
-                    // Get element's name
-                    elementName = reader.Name;
-
-                    // ==== CASES ====================
-                    // Parse a tileset
-                    if (elementName.Equals("tileset"))
-                    {
-                        // WARNING! Uses the tileset name as the name of the asset to load.
-                        // Works provided tileset name always set to tileset asset name.
-                        tileset = game.Content.Load<Texture2D>(@"graphics\" + reader.GetAttribute("name"));
-
-                        // Initialize tile array
-                        int tileCount = (tileset.Width / tileSize) * (tileset.Height / tileSize);
-                        tilePass = new Passability[tileCount];
-
-                        for (int index = 0; index < tileCount; index++)
-                            tilePass[index] = Passability.Ignore;
-
-                        // Read tileOffset
-                        tileOffset = int.Parse(reader.GetAttribute("firstgid"));
-
-                        // Calculate tilesPerRow
-                        tilesPerRow = tileset.Width / tileSize;
-
-                        // Read tile properties
-                        while (reader.ReadToDescendant("tile") || reader.ReadToNextSibling("tile"))
-                        {
-                            int id = int.Parse(reader.GetAttribute("id"));
-
-                            // Get property inside properties
-                            bool properties = reader.ReadToFollowing("properties");
-                            bool property = reader.ReadToFollowing("property");
-
-                            // Set passability
-                            tilePass[id] = Parser.parsePassability(reader.GetAttribute("value"));
-
-                            reader.MoveToElement();
-                            reader.Skip();
-                            reader.MoveToElement();
-                            reader.Skip();
-                            reader.MoveToElement();
-                            reader.Skip();
-                            reader.MoveToElement();
-                            reader.Skip();
-                            reader.MoveToElement();
-                            reader.Skip();
-                            reader.MoveToElement();
-                            //reader.Skip();
-                        }
-                    }
-                    // Parse a list of tiles from a tilelayer
-                    else if (elementName.Equals("layer"))
-                    {
-                        // Get layer name
-                        string name = reader.GetAttribute("name");
-
-                        // Set up the new layer
-                        TileLayer layer = new TileLayer(game, name, tileset, width, height, tileset.Width / tileSize, tileSize);
-
-                        // Add the new tilelayer to the layerlist
-                        layerList.Add(layer);
-
-                        // Get the array of tiles from the layer
-                        Tile[,] tiles = layer.getTiles();
-
-                        // Read each tile from the layer
-                        for (int count = 0; count < width * height; count++)
-                        {
-                            reader.ReadToFollowing("tile");
-                            int id = int.Parse(reader.GetAttribute("gid")) - tileOffset;
-                            //bool pass = id < 0 || tilePass[id];
-
-                            Passability pass = Passability.False;
-                            if (id < 0)
-                                pass = Passability.Ignore;
-                            else
-                                pass = tilePass[id];
-
-                            tiles[count % width, count / width] = new Tile(pass, id);
-                        }
-                    }
-                    else if (elementName.Equals("objectgroup"))
-                    {
-                        objectLayerSeen = true;
-                        objectLayer = new ObjectLayer();
-                        layerList.Add(objectLayer);
-                    }
-                }
-            }
-
-            if (!objectLayerSeen)
-            {
-                objectLayer = new ObjectLayer();
-                layerList.Add(objectLayer);
-            }
-
-            reader.Close();
-        }
-        */
+        private RenderTarget2D lightRenderTarget;
 
         // Read a map PROPERLY from a .tmx XML file
-        public TileMap(Game game, string filename)
+        public TileMap(Game1 game, string filename)
         {
+            gameRef = game;
+            light = game.Content.Load<Texture2D>(@"graphics\light");
+
+            ambientLight = new Color(255, 255, 255);
+
+            // Set up lighting render target
+            lightRenderTarget = new RenderTarget2D(game.GraphicsDevice,
+                                                   game.getWidth(),
+                                                   game.getHeight());
+
             // List to hold drawable layers
             layerList = new List<DrawableLayer>();
 
@@ -190,6 +73,10 @@ namespace SimpleRPG
             Passability objectPassability = Passability.Ignore;
             int objectX = 0, objectY = 0;
             Facing objectFacing = Facing.Down;
+            bool objectEmitsLight = false;
+            bool objectLightFlickers = false;
+            Color objectLightColor = new Color(0, 0, 0, 0);
+            string objectLightTexture = "light";
 
             while (reader.Read())
             {
@@ -201,6 +88,8 @@ namespace SimpleRPG
                         // Map element
                         if (reader.Name == "map")
                         {
+                            lastMajorNode = "map";
+
                             // Read width, height and size of tile attributes from map
                             width = int.Parse(reader.GetAttribute("width"));
                             height = int.Parse(reader.GetAttribute("height"));
@@ -276,8 +165,16 @@ namespace SimpleRPG
                         // Properties elements. Includes tilesets, tiles, objects etc.
                         else if (reader.Name == "property")
                         {
+                            if (lastMajorNode == "map")
+                            {
+                                string propertyName = reader.GetAttribute("name");
+                                if (propertyName == "ambientLight")
+                                {
+                                    ambientLight = Parser.parseColor(reader.GetAttribute("value"));
+                                }
+                            }
                             // Read tile properties, usually from within a tileset element
-                            if (lastMajorNode == "tile")
+                            else if (lastMajorNode == "tile")
                             {
                                 // Read attribute with name="pass"
                                 // Only one attribute currently, so value can be read directly
@@ -316,6 +213,15 @@ namespace SimpleRPG
                                     objectPassability = Parser.parsePassability(reader.GetAttribute("value"));
                                 else if (attr == "face")
                                     objectFacing = Parser.parseFacing(reader.GetAttribute("value"));
+                                else if (attr == "emitsLight")
+                                {
+                                    objectEmitsLight = true;
+                                    objectLightColor = Parser.parseColor(reader.GetAttribute("value"));
+                                }
+                                else if (attr == "lightTexture")
+                                    objectLightTexture = reader.GetAttribute("value");
+                                else if (attr == "lightFlickers")
+                                    objectLightFlickers = true;
                             }
                         }
 
@@ -341,6 +247,7 @@ namespace SimpleRPG
 
                             objectLayer = newLayer;
                         }
+                        
                         break;
                     case XmlNodeType.Attribute:
 
@@ -361,6 +268,14 @@ namespace SimpleRPG
                             o.setContainingMap(this);
                             o.setFacing(objectFacing);
                             ol.addObject(o);
+
+                            if (objectEmitsLight)
+                            {
+                                o.givesOffLight(objectLightTexture, objectLightColor, objectLightFlickers);
+                                objectEmitsLight = false;
+                                objectLightTexture = "light";
+                                objectLightFlickers = false;
+                            }
                         }
                         break;
                     default:
@@ -370,6 +285,8 @@ namespace SimpleRPG
 
 
             }
+
+            addObject(new ParticleEmitter(game, "emitter", 3, 5));
         }
 
         public override void update()
@@ -387,11 +304,53 @@ namespace SimpleRPG
 
         public void draw(SpriteBatch spriteBatch, Point firstTile, int tilesAcross, int tilesDown, Point offset, int scale)
         {
+            renderLights(spriteBatch);
+                        
             foreach (DrawableLayer layer in layerList)
             {
                 layer.setOpacity(opacity);
                 layer.draw(spriteBatch, firstTile, tilesAcross, tilesDown, offset, scale);
             }
+
+            drawLights(spriteBatch);
+        }
+
+        protected void renderLights(SpriteBatch spriteBatch)
+        {
+            // End first draw call
+            spriteBatch.End();
+
+            // Render lights to target
+            GraphicsDevice graphics = gameRef.GraphicsDevice;
+
+            graphics.SetRenderTarget(lightRenderTarget);
+            graphics.Clear(ambientLight);
+
+            // Start lighting draw call
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, null, null);
+
+            List<MapObject> objects = objectLayer.getObjects();
+            foreach (MapObject mapObject in objects)
+            {
+                if (mapObject.givesOffLight())
+                    mapObject.drawLight(spriteBatch);
+            }
+
+            spriteBatch.End();
+
+            graphics.SetRenderTarget(null);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
+        }
+
+        protected void drawLights(SpriteBatch spriteBatch)
+        {
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, GraphicsHelper.Multiply, SamplerState.PointClamp, null, null);
+            spriteBatch.Draw(lightRenderTarget, new Vector2(), Color.White);
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
         }
 
         public void addObject(MapObject toAdd)

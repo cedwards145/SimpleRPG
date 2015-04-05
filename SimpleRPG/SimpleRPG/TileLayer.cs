@@ -53,22 +53,25 @@ namespace SimpleRPG
                 for (int y = firstTile.Y; y < height && y < firstTile.Y + tilesDown; y++)
                 {
                     currentTile = tiles[x, y];
-                    tileX = currentTile.getTileID() % tilesPerRow;
-                    tileY = currentTile.getTileID() / tilesPerRow;
+                    if (currentTile.getTileID() != -1)
+                    {
+                        tileX = currentTile.getTileID() % tilesPerRow;
+                        tileY = currentTile.getTileID() / tilesPerRow;
 
-                    Rectangle destination = new Rectangle(x * tileSize - offset.X, y * tileSize - offset.Y, tileSize, tileSize);
-                    destination.X *= scale;
-                    destination.Y *= scale;
-                    destination.Width *= scale;
-                    destination.Height *= scale;
+                        Rectangle destination = new Rectangle(x * tileSize - offset.X, y * tileSize - offset.Y, tileSize, tileSize);
+                        destination.X *= scale;
+                        destination.Y *= scale;
+                        destination.Width *= scale;
+                        destination.Height *= scale;
 
-                    Rectangle source = new Rectangle(tileX * tileSize, tileY * tileSize, tileSize, tileSize);
+                        Rectangle source = new Rectangle(tileX * tileSize, tileY * tileSize, tileSize, tileSize);
 
-                    spriteBatch.Draw(tileset, destination, source, Color.White * opacity);
+                        spriteBatch.Draw(tileset, destination, source, Color.White * opacity);
 
-                    Color tileTint = currentTile.getTint();
-                    if (!tileTint.Equals(trans))
-                        GraphicsHelper.fillRectangle(spriteBatch, destination, tileTint);
+                        Color tileTint = currentTile.getTint();
+                        if (!tileTint.Equals(trans))
+                            GraphicsHelper.fillRectangle(spriteBatch, destination, tileTint);
+                    }
                 }
             }
         }

@@ -25,7 +25,7 @@ namespace SimpleRPG.States
             base.update();
             itemWindow.update();
 
-            if (Input.isButtonPressed(Controller.ControllerButton.enter))
+            if (Input.isButtonPressed(ControllerButton.enter))
             {
                 int selectedIndex = itemWindow.getIndex();
 

@@ -7,8 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SimpleRPG
 {
-    public enum Facing { Up, Down, Left, Right };
-
     public class MapObject : IComparable<MapObject>
     {
         private static int nextID = 1;
@@ -31,6 +29,13 @@ namespace SimpleRPG
         protected Passability passability;
 
         private bool smoothMoving = true;
+
+        // LIGHTING
+        protected Texture2D lightTexture;
+        protected Color lightColor;
+        protected bool emitsLight, lightFlicker;
+
+        #region Constructors
 
         public MapObject(Game game, string textureName, int xCoord, int yCoord, Facing reqFacing)
             :this(game, textureName, xCoord, yCoord)
@@ -72,7 +77,9 @@ namespace SimpleRPG
             facing = Facing.Down;
         }
 
-        public void update()
+        #endregion
+
+        public virtual void update()
         {
             if (containingMap != null)
             {
@@ -116,7 +123,7 @@ namespace SimpleRPG
             }
         }
 
-        public void draw(SpriteBatch spriteBatch, float opacity, Point mapOffset, int scale)
+        public virtual void draw(SpriteBatch spriteBatch, float opacity, Point mapOffset, int scale)
         {
             int frameWidth = spritesheet.Width / 4;
             int frameHeight = spritesheet.Height / 4;
@@ -136,6 +143,8 @@ namespace SimpleRPG
             spriteBatch.Draw(spritesheet, destination, source, Color.White * opacity);
         }
 
+        #region Helper Methods
+
         public void move(Point moveValue)
         {
             if (!moving)
@@ -147,21 +156,17 @@ namespace SimpleRPG
             }
         }
 
-        public void face(Point point)
+        public int CompareTo(MapObject other)
         {
-            int xDelta = Math.Abs(location.X - point.X);
-            int yDelta = Math.Abs(location.Y - point.Y);
-
-            if (xDelta > yDelta)
-                if (location.X - point.X < 0)
-                    facing = Facing.Right;
+            if (location.Y == other.location.Y)
+            {
+                if (location.X == other.location.X)
+                    return id - other.id;
                 else
-                    facing = Facing.Left;
+                    return location.X - other.location.X;
+            }
             else
-                if (location.Y - point.Y < 0)
-                    facing = Facing.Down;
-                else
-                    facing = Facing.Up;
+                return location.Y - other.location.Y;
         }
 
         public static Point facingToPoint(Facing face)
@@ -202,6 +207,27 @@ namespace SimpleRPG
             }
         }
 
+        #endregion
+
+        #region Mutator Methods
+
+        public void face(Point point)
+        {
+            int xDelta = Math.Abs(location.X - point.X);
+            int yDelta = Math.Abs(location.Y - point.Y);
+
+            if (xDelta > yDelta)
+                if (location.X - point.X < 0)
+                    facing = Facing.Right;
+                else
+                    facing = Facing.Left;
+            else
+                if (location.Y - point.Y < 0)
+                    facing = Facing.Down;
+                else
+                    facing = Facing.Up;
+        }
+
         public void setContainingMap(TileMap value)
         {
             containingMap = value;
@@ -222,18 +248,14 @@ namespace SimpleRPG
             location = new Point(x, y);
         }
 
-        public int CompareTo(MapObject other)
+        public void setSpritesheet(string sheetName)
         {
-            if (location.Y == other.location.Y)
-            {
-                if (location.X == other.location.X)
-                    return id - other.id;
-                else
-                    return location.X - other.location.X;
-            }
-            else
-                return location.Y - other.location.Y;
+            spritesheet = Utilities.getGameRef().Content.Load<Texture2D>(@"graphics\" + sheetName);
         }
+
+        #endregion
+
+        #region Accessor Methods
 
         public TileMap getContainingMap()
         {
@@ -305,9 +327,59 @@ namespace SimpleRPG
             return map == containingMap;
         }
 
-        public void setSpritesheet(string sheetName)
+        #endregion
+
+        #region Lighting Methods
+
+        public bool givesOffLight()
         {
-            spritesheet = Utilities.getGameRef().Content.Load<Texture2D>(@"graphics\" + sheetName);
+            return emitsLight;
         }
+
+        public void givesOffLight(string lightName, Color color, bool flicker)
+        {
+            emitsLight = true;
+            lightTexture = Utilities.getGameRef().Content.Load<Texture2D>(@"graphics\" + lightName);
+            lightColor = color;
+            lightFlicker = flicker;
+        }
+
+        public virtual void drawLight(SpriteBatch spriteBatch)
+        {
+            if (emitsLight)
+            {
+                Game1 gameRef = Utilities.getGameRef();
+
+                int scale = gameRef.getGraphicsScale();
+                int tileSize = containingMap.getTileSize();
+
+                Camera camera = gameRef.getCamera();
+
+                float lightScale = 1.0f;
+                if (lightFlicker)
+                {
+                    lightScale = Utilities.getRandom().Next(90, 100) / 100.0f;
+                }
+
+                int lightWidth = (int)(lightTexture.Width * lightScale);
+                int lightHeight = (int)(lightTexture.Height * lightScale);
+
+                // Position calculated as: location (in tiles) * tileSize + half of a tile (to center on a tile,
+                //                         + any offset from animation, - half the size of the light texture
+                Point centerPosition = new Point(location.X * tileSize + (tileSize / 2) + offset.X - (lightWidth / 2),
+                                                 location.Y * tileSize + (tileSize / 2) + offset.Y - (lightHeight / 2));
+
+                centerPosition.X *= scale;
+                centerPosition.Y *= scale;
+
+                Point transformedPoint = camera.transformPoint(centerPosition);
+                spriteBatch.Draw(lightTexture, new Rectangle(transformedPoint.X,
+                                                             transformedPoint.Y,
+                                                             lightWidth * scale,
+                                                             lightHeight * scale), lightColor);
+            }
+        }
+
+        #endregion
     }
 }

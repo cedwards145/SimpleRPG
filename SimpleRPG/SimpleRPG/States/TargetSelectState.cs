@@ -46,7 +46,7 @@ namespace SimpleRPG.States
             if (Player.isInBattle())
                 Player.getBattle().highlightBattler(enemies[index]);
 
-            if (Input.isButtonPressed(Controller.ControllerButton.enter))
+            if (Input.isButtonPressed(ControllerButton.enter))
             {
                 parentState.passData(this, enemies[index]);
             }

@@ -124,9 +124,9 @@ namespace SimpleRPG
 
             ItemManager.initialize();
             ItemContainer playerInventory = Player.getInventory();
-            //playerInventory.addItem("Small Potion",  2);
-            //playerInventory.addItem("Large Potion");
-            //playerInventory.addItem("Carved Wood Staff");
+            playerInventory.addItem("Small Potion",  2);
+            playerInventory.addItem("Large Potion");
+            playerInventory.addItem("Carved Wood Staff");
             playerInventory.addItem("Throwing Knife", 10);
 
             Player.initialize(this);
@@ -158,6 +158,7 @@ namespace SimpleRPG
         {
             Input.update();
             Debug.update();
+            Lighting.update();
 
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
@@ -201,10 +202,10 @@ namespace SimpleRPG
 
         public GameState getFirstGameState()
         {
-            TileMap map = new TileMap(this, "cave");
+            TileMap map = new TileMap(this, "school");
             player = Player.getParty()[0].getMapObject();
 
-            player.setPosition(8, 0);
+            player.setPosition(2, 4);
             map.addObject(player);
 
             camera = new Camera(screenWidth, screenHeight);

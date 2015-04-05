@@ -26,7 +26,6 @@ namespace SimpleRPG.States
 
             listbox = new ListBox(game, new Point(), 100 * game.getGraphicsScale(), 4, new string[] {"New Game", "Load Game", "Options", "Exit" }, "windowskin");
             listbox.setPosition(GraphicsHelper.calculateCenterPositionP(listbox.getWidth(), listbox.getHeight()));
-
             listbox.setTextAlign(TextAlign.Center);
         }
 
@@ -35,7 +34,7 @@ namespace SimpleRPG.States
             base.update();
             listbox.update();
 
-            if (Input.isButtonPressed(Controller.ControllerButton.enter))
+            if (Input.isButtonPressed(ControllerButton.enter))
             {
                 int index = listbox.getIndex();
 

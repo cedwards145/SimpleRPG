@@ -27,9 +27,9 @@ namespace SimpleRPG.Windows
             if (opacity >= 1 && messageLength < message.Length)
                 messageLength++;
 
-            if (Input.isButtonPressed(Controller.ControllerButton.enter) && messageLength < message.Length)
+            if (Input.isButtonPressed(ControllerButton.enter) && messageLength < message.Length)
                 messageLength = message.Length;
-            else if (Input.isButtonPressed(Controller.ControllerButton.enter))
+            else if (Input.isButtonPressed(ControllerButton.enter))
                 removeMe = true;
         }
 

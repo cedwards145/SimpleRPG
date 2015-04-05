@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace SimpleRPG
 {
@@ -33,6 +34,14 @@ namespace SimpleRPG
                 return Passability.False;
             else
                 return Passability.Ignore;
+        }
+
+        public static Color parseColor(string value)
+        {
+            string[] components = value.Split(',');
+            return new Color(int.Parse(components[0]),
+                             int.Parse(components[1]),
+                             int.Parse(components[2]));
         }
     }
 }

@@ -11,7 +11,6 @@ namespace SimpleRPG
     /// </summary>
     public class Controller
     {
-        public enum ControllerButton { up, down, left, right, enter, back }
 
         private static Dictionary<ControllerButton, List<Keys>> keyMap = new Dictionary<ControllerButton, List<Keys>>();
         private static Dictionary<ControllerButton, List<Buttons>> buttonMap = new Dictionary<ControllerButton, List<Buttons>>();

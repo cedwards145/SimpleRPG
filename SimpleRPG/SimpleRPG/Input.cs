@@ -56,7 +56,7 @@ namespace SimpleRPG
         /// </summary>
         /// <param name="button">The button to query</param>
         /// <returns></returns>
-        public static bool isButtonDown(Controller.ControllerButton button)
+        public static bool isButtonDown(ControllerButton button)
         {
             List<Keys> keys = Controller.getButtonKeys(button);
             bool down = false;
@@ -98,7 +98,7 @@ namespace SimpleRPG
         /// </summary>
         /// <param name="button">The button to query</param>
         /// <returns></returns>
-        public static bool isButtonPressed(Controller.ControllerButton button)
+        public static bool isButtonPressed(ControllerButton button)
         {
             List<Keys> keys = Controller.getButtonKeys(button);
             bool pressed = false;
@@ -137,7 +137,7 @@ namespace SimpleRPG
         /// </summary>
         /// <param name="button">The button to query</param>
         /// <returns></returns>
-        public static bool isButtonReleased(Controller.ControllerButton button)
+        public static bool isButtonReleased(ControllerButton button)
         {
             List<Keys> keys = Controller.getButtonKeys(button);
             bool released = false;

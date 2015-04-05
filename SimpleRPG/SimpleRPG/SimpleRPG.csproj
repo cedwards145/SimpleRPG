@@ -109,7 +109,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIBattler.cs" />
+    <Compile Include="Lighting.cs" />
+    <Compile Include="Particle.cs" />
+    <Compile Include="ParticleEmitter.cs" />
     <Compile Include="SpriteAnimation.cs" />
+    <Compile Include="States\CraftingState.cs" />
     <Compile Include="WindowAnimation.cs" />
     <Compile Include="Battler.cs" />
     <Compile Include="Camera.cs" />
@@ -158,9 +162,13 @@
     <Compile Include="Widgets\TextWidget.cs" />
     <Compile Include="Widgets\Widget.cs" />
     <Compile Include="Windows\BattleCompleteWindow.cs" />
+    <Compile Include="Windows\ClickableLabel.cs" />
+    <Compile Include="Windows\CraftingItemList.cs" />
+    <Compile Include="Windows\CraftingWindow.cs" />
     <Compile Include="Windows\EnemyBattleStatusWindow.cs" />
     <Compile Include="Windows\ItemDescriptionWindow.cs" />
     <Compile Include="Windows\ItemList.cs" />
+    <Compile Include="Windows\LabelWindow.cs" />
     <Compile Include="Windows\ListBox.cs" />
     <Compile Include="MapObject.cs" />
     <Compile Include="States\MapState.cs" />
@@ -222,6 +230,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="content\map.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="content\school.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

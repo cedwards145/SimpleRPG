@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['statemanager',['StateManager',['../class_simple_r_p_g_1_1_states_1_1_state_manager.html',1,'SimpleRPG::States']]]
+  ['objectlayer',['ObjectLayer',['../class_simple_r_p_g_1_1_object_layer.html',1,'SimpleRPG']]]
 ];

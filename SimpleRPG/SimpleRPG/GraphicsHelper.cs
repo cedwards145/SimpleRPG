@@ -18,6 +18,16 @@ namespace SimpleRPG
         public static Game game;
         private static Texture2D oneByOne;
 
+        /// <summary>
+        /// Multiply blending
+        /// </summary>
+        public static BlendState Multiply = new BlendState()
+        {
+            ColorSourceBlend = Blend.DestinationColor,
+            ColorDestinationBlend = Blend.Zero,
+            ColorBlendFunction = BlendFunction.Add
+        }; 
+
         public static void drawImageToBox(SpriteBatch spriteBatch, Texture2D image, Rectangle rect)
         {
             int width = rect.Width;
@@ -73,8 +83,8 @@ namespace SimpleRPG
         public static Vector2 centerText(SpriteFont font, string text, Rectangle box)
         {
             Vector2 textSize = font.MeasureString(text);
-            float x = (box.Width - (textSize.X)) / 2;
-            float y = (box.Height - (textSize.Y)) / 2;
+            float x = (box.Width - textSize.X) / 2.0f;
+            float y = (box.Height - textSize.Y) / 2.0f;
 
             return new Vector2(box.X + x, box.Y + y);
         }
@@ -82,8 +92,8 @@ namespace SimpleRPG
         public static Vector2 centerTextP(SpriteFont font, string text, Rectangle box)
         {
             Vector2 textSize = font.MeasureString(text);
-            float x = (box.Width - (textSize.X)) / 2;
-            float y = (box.Height - (textSize.Y)) / 2;
+            float x = (box.Width - textSize.X) / 2.0f;
+            float y = (box.Height - textSize.Y) / 2.0f;
 
             return new Vector2((int)(box.X + x), (int)(box.Y + y));
         }

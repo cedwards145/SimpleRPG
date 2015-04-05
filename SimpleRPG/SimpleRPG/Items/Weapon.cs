@@ -10,7 +10,7 @@ namespace SimpleRPG.Items
         protected int baseDamage;
 
         public Weapon(string weaponName, string weaponDescription, int damage)
-            :base(weaponName, weaponDescription)
+            :base(weaponName, weaponDescription, 0)
         {
             baseDamage = damage;
         }

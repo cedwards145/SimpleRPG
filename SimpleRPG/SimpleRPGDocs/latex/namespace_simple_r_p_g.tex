@@ -1,10 +1,12 @@
-\hypertarget{namespace_simple_r_p_g}{\section{Package Simple\+R\+P\+G}
-\label{namespace_simple_r_p_g}\index{Simple\+R\+P\+G@{Simple\+R\+P\+G}}
+\hypertarget{namespace_simple_r_p_g}{\section{Package Simple\-R\-P\-G}
+\label{namespace_simple_r_p_g}\index{Simple\-R\-P\-G@{Simple\-R\-P\-G}}
 }
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
 package \hyperlink{namespace_simple_r_p_g_1_1_events}{Events}
+\item 
+package \hyperlink{namespace_simple_r_p_g_1_1_items}{Items}
 \item 
 package \hyperlink{namespace_simple_r_p_g_1_1_states}{States}
 \item 
@@ -15,7 +17,7 @@ package \hyperlink{namespace_simple_r_p_g_1_1_windows}{Windows}
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \hyperlink{class_simple_r_p_g_1_1_a_i_battler}{A\+I\+Battler}
+class \hyperlink{class_simple_r_p_g_1_1_a_i_battler}{A\-I\-Battler}
 \item 
 class \hyperlink{class_simple_r_p_g_1_1_animation}{Animation}
 \item 
@@ -23,54 +25,119 @@ class \hyperlink{class_simple_r_p_g_1_1_battler}{Battler}
 \item 
 class \hyperlink{class_simple_r_p_g_1_1_camera}{Camera}
 \item 
+class {\bfseries Clusterer}
+\begin{DoxyCompactList}\small\item\em Static class that performs clustering \end{DoxyCompactList}\item 
+class {\bfseries Combat\-Resolver}
+\begin{DoxyCompactList}\small\item\em Simple class to handle combat, so that all calculations are done in one place \end{DoxyCompactList}\item 
+class \hyperlink{class_simple_r_p_g_1_1_combat_result}{Combat\-Result}
+\begin{DoxyCompactList}\small\item\em A contained class to hold details about a turn of combat. All attributes are public, class is simply used to collect lots of different information between states \end{DoxyCompactList}\item 
+class {\bfseries Debug}
+\item 
 class \hyperlink{class_simple_r_p_g_1_1_drawable}{Drawable}
 \item 
-class \hyperlink{class_simple_r_p_g_1_1_drawable_layer}{Drawable\+Layer}
+class \hyperlink{class_simple_r_p_g_1_1_drawable_layer}{Drawable\-Layer}
 \item 
-class \hyperlink{class_simple_r_p_g_1_1_enemy_manager}{Enemy\+Manager}
+class \hyperlink{class_simple_r_p_g_1_1_drawable_rectangle}{Drawable\-Rectangle}
+\item 
+class \hyperlink{class_simple_r_p_g_1_1_enemy_manager}{Enemy\-Manager}
 \item 
 class \hyperlink{class_simple_r_p_g_1_1_game1}{Game1}
 \begin{DoxyCompactList}\small\item\em This is the main type for your game \end{DoxyCompactList}\item 
+class \hyperlink{class_simple_r_p_g_1_1_graphics_helper}{Graphics\-Helper}
+\item 
 class \hyperlink{class_simple_r_p_g_1_1_input}{Input}
 \item 
-class \hyperlink{class_simple_r_p_g_1_1_item}{Item}
+class \hyperlink{class_simple_r_p_g_1_1_map_object}{Map\-Object}
 \item 
-class \hyperlink{class_simple_r_p_g_1_1_item_container}{Item\+Container}
+class \hyperlink{class_simple_r_p_g_1_1_object_layer}{Object\-Layer}
 \item 
-class \hyperlink{class_simple_r_p_g_1_1_item_manager}{Item\+Manager}
-\item 
-class \hyperlink{class_simple_r_p_g_1_1_map_object}{Map\+Object}
-\item 
-class \hyperlink{class_simple_r_p_g_1_1_object_layer}{Object\+Layer}
+class {\bfseries Parser}
 \item 
 class \hyperlink{class_simple_r_p_g_1_1_player}{Player}
 \item 
-class \hyperlink{class_simple_r_p_g_1_1_player_battler}{Player\+Battler}
-\item 
+class \hyperlink{class_simple_r_p_g_1_1_player_battler}{Player\-Battler}
+\begin{DoxyCompactList}\small\item\em Class representing a player controlled \hyperlink{class_simple_r_p_g_1_1_battler}{Battler} \end{DoxyCompactList}\item 
 class \hyperlink{class_simple_r_p_g_1_1_tile}{Tile}
 \item 
-class \hyperlink{class_simple_r_p_g_1_1_tile_layer}{Tile\+Layer}
+class \hyperlink{class_simple_r_p_g_1_1_tile_layer}{Tile\-Layer}
 \item 
-class \hyperlink{class_simple_r_p_g_1_1_tile_map}{Tile\+Map}
-\end{DoxyCompactItemize}
+class \hyperlink{class_simple_r_p_g_1_1_tile_map}{Tile\-Map}
+\item 
+class {\bfseries Utilities}
+\begin{DoxyCompactList}\small\item\em Class containing assorted useful references \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{namespace_simple_r_p_g_aa2006fe11fa47a3e4721bf6a3dae3f55}{enum {\bfseries Animation\+Type} \{ {\bfseries None}, 
-{\bfseries Fade}
- \}}\label{namespace_simple_r_p_g_aa2006fe11fa47a3e4721bf6a3dae3f55}
-
+enum {\bfseries Animation\-Type} \{ {\bfseries None}, 
+{\bfseries Fade}, 
+{\bfseries Fade\-Slow}
+ \}
 \item 
-\hypertarget{namespace_simple_r_p_g_abe65938b504a8354d61776aebf895f6d}{enum {\bfseries Facing} \{ {\bfseries Up}, 
+enum \hyperlink{namespace_simple_r_p_g_a5f1ec21e7f4e36278a6cedd38c51e650}{Passability} \{ {\bfseries True}, 
+{\bfseries False}, 
+{\bfseries Ignore}
+ \}
+\begin{DoxyCompactList}\small\item\em Used by Tiles and Map\-Objects to determine whether objects can pass through them. Ignore -\/ Takes the passability from the tile below it True -\/ Objects can pass through False -\/ Objects cannot pass through \end{DoxyCompactList}\item 
+enum \hyperlink{namespace_simple_r_p_g_af69ad1f922e177c5a1cd81b2c0f2c8ce}{Valid\-Targets} \{ {\bfseries Friends}, 
+{\bfseries Enemies}, 
+{\bfseries All}
+ \}
+\begin{DoxyCompactList}\small\item\em Determines what Battlers a Skill or Item are able to target. Friends -\/ Battlers in the same party as the user Enemies -\/ Battlers not in the same party as the user All -\/ Any Battler \end{DoxyCompactList}\item 
+enum \hyperlink{namespace_simple_r_p_g_aa7bf94f037fcccbe428edca5e36bec67}{Damage\-Type} \{ {\bfseries Healing}, 
+{\bfseries Harming}
+ \}
+\begin{DoxyCompactList}\small\item\em Determines whether skills or items cause positive or negative changes to a targets H\-P \end{DoxyCompactList}\item 
+enum \hyperlink{namespace_simple_r_p_g_a956c6a011833191ccb1b0aa38a1d5916}{Text\-Align} \{ {\bfseries Center}, 
+{\bfseries Left}, 
+{\bfseries Right}
+ \}
+\begin{DoxyCompactList}\small\item\em Used to specify which direction text should align \end{DoxyCompactList}\item 
+enum \hyperlink{namespace_simple_r_p_g_a52ff6b4f812beca5f07344ae6652c1b4}{Display\-Mode} \{ {\bfseries Fullscreen}, 
+{\bfseries Window}, 
+{\bfseries Borderless\-Window}
+ \}
+\begin{DoxyCompactList}\small\item\em Describes how the game's window should be set up \end{DoxyCompactList}\item 
+enum {\bfseries Facing} \{ {\bfseries Up}, 
 {\bfseries Down}, 
 {\bfseries Left}, 
 {\bfseries Right}
- \}}\label{namespace_simple_r_p_g_abe65938b504a8354d61776aebf895f6d}
-
-\item 
-\hypertarget{namespace_simple_r_p_g_a5f1ec21e7f4e36278a6cedd38c51e650}{enum {\bfseries Passability} \{ {\bfseries True}, 
-{\bfseries False}, 
-{\bfseries Ignore}
- \}}\label{namespace_simple_r_p_g_a5f1ec21e7f4e36278a6cedd38c51e650}
-
+ \}
 \end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{namespace_simple_r_p_g_aa7bf94f037fcccbe428edca5e36bec67}{\index{Simple\-R\-P\-G@{Simple\-R\-P\-G}!Damage\-Type@{Damage\-Type}}
+\index{Damage\-Type@{Damage\-Type}!SimpleRPG@{Simple\-R\-P\-G}}
+\subsubsection[{Damage\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Simple\-R\-P\-G.\-Damage\-Type}}}\label{namespace_simple_r_p_g_aa7bf94f037fcccbe428edca5e36bec67}
+
+
+Determines whether skills or items cause positive or negative changes to a targets H\-P 
+
+\hypertarget{namespace_simple_r_p_g_a52ff6b4f812beca5f07344ae6652c1b4}{\index{Simple\-R\-P\-G@{Simple\-R\-P\-G}!Display\-Mode@{Display\-Mode}}
+\index{Display\-Mode@{Display\-Mode}!SimpleRPG@{Simple\-R\-P\-G}}
+\subsubsection[{Display\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Simple\-R\-P\-G.\-Display\-Mode}}}\label{namespace_simple_r_p_g_a52ff6b4f812beca5f07344ae6652c1b4}
+
+
+Describes how the game's window should be set up 
+
+\hypertarget{namespace_simple_r_p_g_a5f1ec21e7f4e36278a6cedd38c51e650}{\index{Simple\-R\-P\-G@{Simple\-R\-P\-G}!Passability@{Passability}}
+\index{Passability@{Passability}!SimpleRPG@{Simple\-R\-P\-G}}
+\subsubsection[{Passability}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Simple\-R\-P\-G.\-Passability}}}\label{namespace_simple_r_p_g_a5f1ec21e7f4e36278a6cedd38c51e650}
+
+
+Used by Tiles and Map\-Objects to determine whether objects can pass through them. Ignore -\/ Takes the passability from the tile below it True -\/ Objects can pass through False -\/ Objects cannot pass through 
+
+\hypertarget{namespace_simple_r_p_g_a956c6a011833191ccb1b0aa38a1d5916}{\index{Simple\-R\-P\-G@{Simple\-R\-P\-G}!Text\-Align@{Text\-Align}}
+\index{Text\-Align@{Text\-Align}!SimpleRPG@{Simple\-R\-P\-G}}
+\subsubsection[{Text\-Align}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Simple\-R\-P\-G.\-Text\-Align}}}\label{namespace_simple_r_p_g_a956c6a011833191ccb1b0aa38a1d5916}
+
+
+Used to specify which direction text should align 
+
+\hypertarget{namespace_simple_r_p_g_af69ad1f922e177c5a1cd81b2c0f2c8ce}{\index{Simple\-R\-P\-G@{Simple\-R\-P\-G}!Valid\-Targets@{Valid\-Targets}}
+\index{Valid\-Targets@{Valid\-Targets}!SimpleRPG@{Simple\-R\-P\-G}}
+\subsubsection[{Valid\-Targets}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Simple\-R\-P\-G.\-Valid\-Targets}}}\label{namespace_simple_r_p_g_af69ad1f922e177c5a1cd81b2c0f2c8ce}
+
+
+Determines what Battlers a Skill or Item are able to target. Friends -\/ Battlers in the same party as the user Enemies -\/ Battlers not in the same party as the user All -\/ Any \hyperlink{class_simple_r_p_g_1_1_battler}{Battler} 
+

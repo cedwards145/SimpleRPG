@@ -38,11 +38,12 @@ namespace SimpleRPG.Items
         /// <param name="itemName"></param>
         /// <param name="itemDescription"></param>
         public UsableItem(string itemName, string itemDescription)
-            : this(itemName, itemDescription, ValidTargets.All, DamageType.Healing, 0)
+            : this(itemName, itemDescription, 0, ValidTargets.All, DamageType.Healing, 0)
         { }
 
-        public UsableItem(string itemName, string itemDescription, ValidTargets validTargets, DamageType damage, int reqPotency)
-            : base(itemName, itemDescription)
+        public UsableItem(string itemName, string itemDescription, int itemIconIndex,
+                          ValidTargets validTargets, DamageType damage, int reqPotency)
+            : base(itemName, itemDescription, itemIconIndex)
         {
             targets = validTargets;
             targets = validTargets;

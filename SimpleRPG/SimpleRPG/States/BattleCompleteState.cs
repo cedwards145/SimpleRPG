@@ -48,7 +48,7 @@ namespace SimpleRPG.States
             base.update();
             window.update();
 
-            if (!closing && Input.isButtonPressed(Controller.ControllerButton.enter))
+            if (!closing && Input.isButtonPressed(ControllerButton.enter))
                 exit();
 
             for (int index = 0; index < party.Count; index++)

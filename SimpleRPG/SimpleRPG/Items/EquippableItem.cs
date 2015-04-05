@@ -7,8 +7,8 @@ namespace SimpleRPG.Items
 {
     public class EquippableItem : Item
     {
-        public EquippableItem(string itemName, string itemDescription)
-            : base(itemName, itemDescription)
+        public EquippableItem(string itemName, string itemDescription, int itemIconIndex)
+            : base(itemName, itemDescription, itemIconIndex)
         { }
         public virtual void equip(Battler target)
         { }

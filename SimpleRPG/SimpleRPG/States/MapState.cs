@@ -35,22 +35,22 @@ namespace SimpleRPG.States
             map.update();
             camera.update();
 
-            if (Input.isButtonPressed(Controller.ControllerButton.back))
+            if (Input.isButtonPressed(ControllerButton.back))
                 stateManager.addState(new PauseState(gameRef, null, stateManager));
 
-            if (Input.isButtonDown(Controller.ControllerButton.up))
+            if (Input.isButtonDown(ControllerButton.up))
             {
                 player.move(new Point(0, -1));
             }
-            else if (Input.isButtonDown(Controller.ControllerButton.down))
+            else if (Input.isButtonDown(ControllerButton.down))
             {
                 player.move(new Point(0, 1));
             }
-            else if (Input.isButtonDown(Controller.ControllerButton.left))
+            else if (Input.isButtonDown(ControllerButton.left))
             {
                 player.move(new Point(-1, 0));
             }
-            else if (Input.isButtonDown(Controller.ControllerButton.right))
+            else if (Input.isButtonDown(ControllerButton.right))
             {
                 player.move(new Point(1, 0));
             }

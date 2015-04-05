@@ -5,7 +5,7 @@
 %%For: 
 %Magnification: 1.00
 %%Orientation: Portrait
-%%BoundingBox: 0 0 500 139.860140
+%%BoundingBox: 0 0 500 139.372822
 %%Pages: 0
 %%BeginSetup
 %%EndSetup
@@ -19,13 +19,13 @@
 /marginwidth 10 def
 /distx 20 def
 /disty 40 def
-/boundaspect 3.575000 def  % aspect ratio of the BoundingBox (width/height)
+/boundaspect 3.587500 def  % aspect ratio of the BoundingBox (width/height)
 /boundx 500 def
 /boundy boundx boundaspect div def
 /xspacing 0 def
 /yspacing 0 def
-/rows 10 def
-/cols 5 def
+/rows 14 def
+/cols 7 def
 /scalefactor 0 def
 /boxfont /Times-Roman findfont fontheight scalefont def
 
@@ -177,15 +177,25 @@ boxfont setfont
 (SimpleRPG.Camera) cw
 (SimpleRPG.States.GameState) cw
 (SimpleRPG.TileMap) cw
+(SimpleRPG.Widgets.TextWidget) cw
 (SimpleRPG.Windows.Window) cw
 (SimpleRPG.States.BattleActionSelectState) cw
+(SimpleRPG.States.BattleCompleteState) cw
 (SimpleRPG.States.BattleState) cw
+(SimpleRPG.States.EquipItemState) cw
 (SimpleRPG.States.InventoryState) cw
 (SimpleRPG.States.MapState) cw
 (SimpleRPG.States.MessageState) cw
 (SimpleRPG.States.PauseState) cw
+(SimpleRPG.States.SplashScreenState) cw
 (SimpleRPG.States.TargetSelectState) cw
+(SimpleRPG.States.TitleState) cw
 (SimpleRPG.States.UseItemState) cw
+(SimpleRPG.Widgets.HPWidget) cw
+(SimpleRPG.Widgets.MPWidget) cw
+(SimpleRPG.Widgets.NumberWidget) cw
+(SimpleRPG.Windows.BattleCompleteWindow) cw
+(SimpleRPG.Windows.EnemyBattleStatusWindow) cw
 (SimpleRPG.Windows.ItemDescriptionWindow) cw
 (SimpleRPG.Windows.ListBox) cw
 (SimpleRPG.Windows.MessageWindow) cw
@@ -201,43 +211,65 @@ boundx scalefactor div boundy scalefactor div scale
 
 % ----- classes -----
 
- (SimpleRPG.Drawable) 1.500000 9.000000 box
- (SimpleRPG.Camera) 0.000000 8.000000 box
- (SimpleRPG.States.GameState) 1.000000 8.000000 box
- (SimpleRPG.TileMap) 2.000000 8.000000 box
- (SimpleRPG.Windows.Window) 3.000000 8.000000 box
- (SimpleRPG.States.BattleActionSelectState) 2.000000 7.000000 box
- (SimpleRPG.States.BattleState) 2.000000 6.000000 box
- (SimpleRPG.States.InventoryState) 2.000000 5.000000 box
- (SimpleRPG.States.MapState) 2.000000 4.000000 box
- (SimpleRPG.States.MessageState) 2.000000 3.000000 box
- (SimpleRPG.States.PauseState) 2.000000 2.000000 box
- (SimpleRPG.States.TargetSelectState) 2.000000 1.000000 box
+ (SimpleRPG.Drawable) 2.000000 13.000000 box
+ (SimpleRPG.Camera) 0.000000 12.000000 box
+ (SimpleRPG.States.GameState) 1.000000 12.000000 box
+ (SimpleRPG.TileMap) 2.000000 12.000000 box
+ (SimpleRPG.Widgets.TextWidget) 3.000000 12.000000 box
+ (SimpleRPG.Windows.Window) 5.000000 12.000000 box
+ (SimpleRPG.States.BattleActionSelectState) 2.000000 11.000000 box
+ (SimpleRPG.States.BattleCompleteState) 2.000000 10.000000 box
+ (SimpleRPG.States.BattleState) 2.000000 9.000000 box
+ (SimpleRPG.States.EquipItemState) 2.000000 8.000000 box
+ (SimpleRPG.States.InventoryState) 2.000000 7.000000 box
+ (SimpleRPG.States.MapState) 2.000000 6.000000 box
+ (SimpleRPG.States.MessageState) 2.000000 5.000000 box
+ (SimpleRPG.States.PauseState) 2.000000 4.000000 box
+ (SimpleRPG.States.SplashScreenState) 2.000000 3.000000 box
+ (SimpleRPG.States.TargetSelectState) 2.000000 2.000000 box
+ (SimpleRPG.States.TitleState) 2.000000 1.000000 box
  (SimpleRPG.States.UseItemState) 2.000000 0.000000 box
- (SimpleRPG.Windows.ItemDescriptionWindow) 4.000000 7.000000 box
- (SimpleRPG.Windows.ListBox) 4.000000 6.000000 box
-4.000000 6.000000 mark
- (SimpleRPG.Windows.MessageWindow) 4.000000 5.000000 box
- (SimpleRPG.Windows.PlayerBattleStatusWindow) 4.000000 4.000000 box
+ (SimpleRPG.Widgets.HPWidget) 4.000000 11.000000 box
+ (SimpleRPG.Widgets.MPWidget) 4.000000 10.000000 box
+ (SimpleRPG.Widgets.NumberWidget) 4.000000 9.000000 box
+ (SimpleRPG.Windows.BattleCompleteWindow) 6.000000 11.000000 box
+ (SimpleRPG.Windows.EnemyBattleStatusWindow) 6.000000 10.000000 box
+ (SimpleRPG.Windows.ItemDescriptionWindow) 6.000000 9.000000 box
+ (SimpleRPG.Windows.ListBox) 6.000000 8.000000 box
+6.000000 8.000000 mark
+ (SimpleRPG.Windows.MessageWindow) 6.000000 7.000000 box
+ (SimpleRPG.Windows.PlayerBattleStatusWindow) 6.000000 6.000000 box
 
 % ----- relations -----
 
 solid
-1 1.500000 8.250000 out
+1 2.000000 12.250000 out
 solid
-0.000000 3.000000 9.000000 conn
+0.000000 5.000000 13.000000 conn
 solid
-0 0.000000 8.750000 in
+0 0.000000 12.750000 in
 solid
-0 1.000000 8.750000 in
+0 1.000000 12.750000 in
 solid
-1 1.000000 7.250000 out
+1 1.000000 11.250000 out
 solid
-0 2.000000 8.750000 in
+0 2.000000 12.750000 in
 solid
-0 3.000000 8.750000 in
+0 3.000000 12.750000 in
 solid
-1 3.000000 7.250000 out
+1 3.000000 11.250000 out
+solid
+0 5.000000 12.750000 in
+solid
+1 5.000000 11.250000 out
+solid
+0 1.000000 11.500000 hedge
+solid
+0 1.000000 10.500000 hedge
+solid
+0 1.000000 9.500000 hedge
+solid
+0 1.000000 8.500000 hedge
 solid
 0 1.000000 7.500000 hedge
 solid
@@ -255,14 +287,26 @@ solid
 solid
 0 1.000000 0.500000 hedge
 solid
-1.000000 8.000000 0.500000 vedge
+1.000000 12.000000 0.500000 vedge
 solid
-0 3.000000 7.500000 hedge
+0 3.000000 11.500000 hedge
 solid
-0 3.000000 6.500000 hedge
+0 3.000000 10.500000 hedge
 solid
-0 3.000000 5.500000 hedge
+0 3.000000 9.500000 hedge
 solid
-0 3.000000 4.500000 hedge
+3.000000 12.000000 9.500000 vedge
 solid
-3.000000 8.000000 4.500000 vedge
+0 5.000000 11.500000 hedge
+solid
+0 5.000000 10.500000 hedge
+solid
+0 5.000000 9.500000 hedge
+solid
+0 5.000000 8.500000 hedge
+solid
+0 5.000000 7.500000 hedge
+solid
+0 5.000000 6.500000 hedge
+solid
+5.000000 12.000000 6.500000 vedge

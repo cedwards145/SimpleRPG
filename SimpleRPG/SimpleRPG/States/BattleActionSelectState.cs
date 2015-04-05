@@ -32,7 +32,7 @@ namespace SimpleRPG.States
 
             int index = actionsWindow.getIndex();
 
-            if (Input.isButtonPressed(Controller.ControllerButton.enter))
+            if (Input.isButtonPressed(ControllerButton.enter))
             {
                 Point actionsWindowPosition = actionsWindow.getPosition();
                 Point newPosition = new Point(actionsWindowPosition.X + actionsWindow.getWidth(),

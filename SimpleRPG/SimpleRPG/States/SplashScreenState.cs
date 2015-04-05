@@ -42,8 +42,8 @@ namespace SimpleRPG.States
                 counter++;
             }
 
-            if (Input.isButtonPressed(Controller.ControllerButton.back)
-                || Input.isButtonPressed(Controller.ControllerButton.enter))
+            if (Input.isButtonPressed(ControllerButton.back)
+                || Input.isButtonPressed(ControllerButton.enter))
                 exit();
         }
 
@@ -73,7 +73,11 @@ namespace SimpleRPG.States
             else
                 destination = new Rectangle((int)((width - widthByHeight) / 2f), 0, width, (int)heightByWidth);
 
+            // SamplerState set to pointclamp to correctly render pixel art
+            // Set to linearwrap to render splash screen
+            gameRef.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
             spriteBatch.Draw(texture, destination, Color.White * opacity);
+            gameRef.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
         }
     }
 }

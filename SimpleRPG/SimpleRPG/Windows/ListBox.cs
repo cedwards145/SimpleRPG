@@ -16,6 +16,8 @@ namespace SimpleRPG.Windows
         protected TextAlign textAlign = TextAlign.Right;
         protected List<bool> optionStates;
 
+        protected bool enabled = true;
+
         public ListBox(Game1 game, Point reqPosition, int reqWidth, int optionsInWindow, string[] items, string windowskin)
             : base(game, reqPosition, reqWidth, 0, windowskin)
         {
@@ -62,7 +64,7 @@ namespace SimpleRPG.Windows
                                                location.Y + 10 * scale + (charHeight * optionsIndex));
                 }
 
-                Color color = (optionsIndex + indexOffset == index ? ColorScheme.selectedTextColor : ColorScheme.mainTextColor);
+                Color color = (enabled && (optionsIndex + indexOffset == index) ? ColorScheme.selectedTextColor : ColorScheme.mainTextColor);
                 color = (optionStates[optionsIndex + indexOffset] ? color : ColorScheme.disabledColor);
 
                 spriteBatch.DrawString(font, options[optionsIndex + indexOffset],
@@ -75,13 +77,13 @@ namespace SimpleRPG.Windows
         {
             base.update();
 
-            if (Input.isButtonPressed(Controller.ControllerButton.up))
+            if (enabled && Input.isButtonPressed(ControllerButton.up))
             {
                 moveCursorUp();
             }
-            else if (Input.isButtonPressed(Controller.ControllerButton.down))
+            else if (enabled && Input.isButtonPressed(ControllerButton.down))
             {
-                moveCursorDown();   
+                moveCursorDown();
             }
 
             if (index >= options.Count)
@@ -168,6 +170,21 @@ namespace SimpleRPG.Windows
         public int getIndex()
         {
             return index;
+        }
+
+        public string getSelectedOption()
+        {
+            return options[index];
+        }
+
+        public bool getEnabled()
+        {
+            return enabled;
+        }
+
+        public void setEnabled(bool value)
+        {
+            enabled = value;
         }
 
         public void setTextAlign(TextAlign newAlignment)

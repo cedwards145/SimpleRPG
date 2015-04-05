@@ -25,15 +25,15 @@ namespace SimpleRPG.Items
 
         public static void initialize()
         {
-            addNewItem(new UsableItem("Small Potion", "Restores a bit of HP", ValidTargets.Friends, DamageType.Healing, 10));
-            addNewItem(new UsableItem("Medium Potion", "Restores a lot of HP", ValidTargets.Friends, DamageType.Healing, 50));
-            addNewItem(new UsableItem("Large Potion", "Fully restores HP", ValidTargets.Friends, DamageType.Healing, 99999));
+            addNewItem(new UsableItem("Small Potion", "Restores a bit of HP", 13, ValidTargets.Friends, DamageType.Healing, 10));
+            addNewItem(new UsableItem("Medium Potion", "Restores a lot of HP", 13, ValidTargets.Friends, DamageType.Healing, 50));
+            addNewItem(new UsableItem("Large Potion", "Fully restores HP", 13, ValidTargets.Friends, DamageType.Healing, 99999));
             addNewItem(new UsableItem("Small Elixir", "Restores a bit of MP"));
             addNewItem(new UsableItem("Medium Elixir", "Restores a lot of MP"));
             addNewItem(new UsableItem("Large Elixir", "Fully restores MP"));
-            addNewItem(new EquippableItem("Carved Wood Staff", "A hand-carved mage's weapon"));
-            addNewItem(new EquippableItem("Worn Axe", "An old looking two-handed axe"));
-            addNewItem(new UsableItem("Throwing Knife", "A small dagger to be thrown", ValidTargets.Enemies, DamageType.Harming, 50));
+            addNewItem(new EquippableItem("Carved Wood Staff", "A hand-carved mage's weapon", 14));
+            addNewItem(new EquippableItem("Worn Axe", "An old looking two-handed axe", 6));
+            addNewItem(new UsableItem("Throwing Knife", "A small dagger to be thrown", 11, ValidTargets.Enemies, DamageType.Harming, 50));
         }
     }
 }

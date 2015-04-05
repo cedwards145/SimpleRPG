@@ -1,7 +1,7 @@
-\hypertarget{class_simple_r_p_g_1_1_a_i_battler}{\section{Simple\+R\+P\+G.\+A\+I\+Battler Class Reference}
-\label{class_simple_r_p_g_1_1_a_i_battler}\index{Simple\+R\+P\+G.\+A\+I\+Battler@{Simple\+R\+P\+G.\+A\+I\+Battler}}
+\hypertarget{class_simple_r_p_g_1_1_a_i_battler}{\section{Simple\-R\-P\-G.\-A\-I\-Battler Class Reference}
+\label{class_simple_r_p_g_1_1_a_i_battler}\index{Simple\-R\-P\-G.\-A\-I\-Battler@{Simple\-R\-P\-G.\-A\-I\-Battler}}
 }
-Inheritance diagram for Simple\+R\+P\+G.\+A\+I\+Battler\+:\begin{figure}[H]
+Inheritance diagram for Simple\-R\-P\-G.\-A\-I\-Battler\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[height=2.000000cm]{class_simple_r_p_g_1_1_a_i_battler}
@@ -10,15 +10,52 @@ Inheritance diagram for Simple\+R\+P\+G.\+A\+I\+Battler\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_simple_r_p_g_1_1_a_i_battler_ad738633dcee413ecdf95ee0d78e875d8}{{\bfseries A\+I\+Battler} (string req\+Name, int req\+Max\+H\+P, int req\+Max\+M\+P, int req\+Power, int req\+Will)}\label{class_simple_r_p_g_1_1_a_i_battler_ad738633dcee413ecdf95ee0d78e875d8}
+\hypertarget{class_simple_r_p_g_1_1_a_i_battler_a5343b886da17cdffff98bc39b56a4cf4}{{\bfseries A\-I\-Battler} (string req\-Name, int req\-Max\-H\-P, int req\-Max\-M\-P, int req\-Power, int req\-Will, int exp)}\label{class_simple_r_p_g_1_1_a_i_battler_a5343b886da17cdffff98bc39b56a4cf4}
 
 \item 
-\hypertarget{class_simple_r_p_g_1_1_a_i_battler_a3a1f2c68dda706c3a3f347e368275f3e}{override void {\bfseries take\+Turn} (\hyperlink{class_simple_r_p_g_1_1_states_1_1_battle_state}{Battle\+State} battle)}\label{class_simple_r_p_g_1_1_a_i_battler_a3a1f2c68dda706c3a3f347e368275f3e}
+\hypertarget{class_simple_r_p_g_1_1_a_i_battler_a3a1f2c68dda706c3a3f347e368275f3e}{override void {\bfseries take\-Turn} (\hyperlink{class_simple_r_p_g_1_1_states_1_1_battle_state}{Battle\-State} battle)}\label{class_simple_r_p_g_1_1_a_i_battler_a3a1f2c68dda706c3a3f347e368275f3e}
 
-\end{DoxyCompactItemize}
+\item 
+\hypertarget{class_simple_r_p_g_1_1_a_i_battler_a4938f4cfc972d4c6f923ba5e58bb0d9b}{override \hyperlink{class_simple_r_p_g_1_1_battler}{Battler} {\bfseries clone} ()}\label{class_simple_r_p_g_1_1_a_i_battler_a4938f4cfc972d4c6f923ba5e58bb0d9b}
+
+\item 
+int \hyperlink{class_simple_r_p_g_1_1_a_i_battler_a803b1a057e75f5a3d3c7c60b8147b6c7}{get\-Exp\-Earned} ()
+\begin{DoxyCompactList}\small\item\em Gets the amount of E\-X\-P an \hyperlink{class_simple_r_p_g_1_1_a_i_battler}{A\-I\-Battler} is worth \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_simple_r_p_g_1_1_a_i_battler_a3ccabe122a27e87289f6a40ca4da3c5d}{exp\-Earned}
+\begin{DoxyCompactList}\small\item\em The amount of E\-X\-P a player earns for killing this battler \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
 
-The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\subsection{Member Function Documentation}
+\hypertarget{class_simple_r_p_g_1_1_a_i_battler_a803b1a057e75f5a3d3c7c60b8147b6c7}{\index{Simple\-R\-P\-G\-::\-A\-I\-Battler@{Simple\-R\-P\-G\-::\-A\-I\-Battler}!get\-Exp\-Earned@{get\-Exp\-Earned}}
+\index{get\-Exp\-Earned@{get\-Exp\-Earned}!SimpleRPG::AIBattler@{Simple\-R\-P\-G\-::\-A\-I\-Battler}}
+\subsubsection[{get\-Exp\-Earned}]{\setlength{\rightskip}{0pt plus 5cm}int Simple\-R\-P\-G.\-A\-I\-Battler.\-get\-Exp\-Earned (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_simple_r_p_g_1_1_a_i_battler_a803b1a057e75f5a3d3c7c60b8147b6c7}
+
+
+Gets the amount of E\-X\-P an \hyperlink{class_simple_r_p_g_1_1_a_i_battler}{A\-I\-Battler} is worth 
+
+\begin{DoxyReturn}{Returns}
+The E\-X\-P awarded for killing this battler
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_simple_r_p_g_1_1_a_i_battler_a3ccabe122a27e87289f6a40ca4da3c5d}{\index{Simple\-R\-P\-G\-::\-A\-I\-Battler@{Simple\-R\-P\-G\-::\-A\-I\-Battler}!exp\-Earned@{exp\-Earned}}
+\index{exp\-Earned@{exp\-Earned}!SimpleRPG::AIBattler@{Simple\-R\-P\-G\-::\-A\-I\-Battler}}
+\subsubsection[{exp\-Earned}]{\setlength{\rightskip}{0pt plus 5cm}int Simple\-R\-P\-G.\-A\-I\-Battler.\-exp\-Earned\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_simple_r_p_g_1_1_a_i_battler_a3ccabe122a27e87289f6a40ca4da3c5d}
+
+
+The amount of E\-X\-P a player earns for killing this battler 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 
-D\+:/\+Dropbox/\+Simple\+R\+P\+G/\+Simple\+R\+P\+G/\+Simple\+R\+P\+G/A\+I\+Battler.\+cs\end{DoxyCompactItemize}
+Simple\-R\-P\-G/\-Simple\-R\-P\-G/A\-I\-Battler.\-cs\end{DoxyCompactItemize}

@@ -28,21 +28,26 @@ namespace SimpleRPG.States
             pauseWindow.update();
 
             int menuIndex = pauseWindow.getIndex();
-            if (Input.isButtonPressed(Controller.ControllerButton.enter))
+            string menuItem = pauseWindow.getSelectedOption();
+
+            if (Input.isButtonPressed(ControllerButton.enter))
             {
                 Point menuPosition = pauseWindow.getPosition();
-
-
+                
                 // Items
-                if (menuIndex == 2)
+                if (menuItem == "Items")
                 {
                     addChildState(new InventoryState(gameRef, stateManager, this));
                 }
+                else if (menuItem == "Potions")
+                {
+                    addChildState(new CraftingState(gameRef, this, stateManager));
+                }
                 // Resume
-                else if (menuIndex == 3)
+                else if (menuItem == "Resume")
                     exit();
                 // Exit Game
-                else if (menuIndex == 4)
+                else if (menuItem == "Exit")
                     gameRef.Exit();
             }
         }

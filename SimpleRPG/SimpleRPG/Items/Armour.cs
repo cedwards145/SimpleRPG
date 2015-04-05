@@ -10,7 +10,7 @@ namespace SimpleRPG.Items
         protected int baseDefence;
 
         public Armour(string armourName, string armourDescription, int defence)
-            :base(armourName, armourDescription)
+            :base(armourName, armourDescription, 0)
         {
             baseDefence = defence;
         }
