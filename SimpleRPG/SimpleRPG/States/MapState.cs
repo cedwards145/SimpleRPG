@@ -38,21 +38,24 @@ namespace SimpleRPG.States
             if (Input.isButtonPressed(Controller.ControllerButton.back))
                 stateManager.addState(new PauseState(gameRef, null, stateManager));
 
-            if (Input.isButtonDown(Controller.ControllerButton.up))
+            if (player != null)
             {
-                player.move(new Point(0, -1));
-            }
-            else if (Input.isButtonDown(Controller.ControllerButton.down))
-            {
-                player.move(new Point(0, 1));
-            }
-            else if (Input.isButtonDown(Controller.ControllerButton.left))
-            {
-                player.move(new Point(-1, 0));
-            }
-            else if (Input.isButtonDown(Controller.ControllerButton.right))
-            {
-                player.move(new Point(1, 0));
+                if (Input.isButtonDown(Controller.ControllerButton.up))
+                {
+                    player.move(new Point(0, -1));
+                }
+                else if (Input.isButtonDown(Controller.ControllerButton.down))
+                {
+                    player.move(new Point(0, 1));
+                }
+                else if (Input.isButtonDown(Controller.ControllerButton.left))
+                {
+                    player.move(new Point(-1, 0));
+                }
+                else if (Input.isButtonDown(Controller.ControllerButton.right))
+                {
+                    player.move(new Point(1, 0));
+                }
             }
 
             if (Input.isKeyPressed(Keys.OemMinus))

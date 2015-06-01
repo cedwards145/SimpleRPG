@@ -107,13 +107,6 @@ namespace SimpleRPG.States
             Battler target = (Battler)data;
             
             CombatResolver.useItemOn(target, toUse, (Player.isInBattle() ? Player.getBattle() : null));
-
-            // If item used from combat, skip turn
-            //if (Player.isInBattle())
-            //{
-            //    BattleState battle = Player.getBattle();
-            //    battle.showCombatResult(string.Format("Used {0} on {1}.", toUse.getName(), target.getName()));
-            //}
         }
 
         public void setWindowPosition(Point newPos)

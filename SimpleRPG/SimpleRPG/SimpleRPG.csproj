@@ -123,8 +123,6 @@
     <Compile Include="DrawableRectangle.cs" />
     <Compile Include="EnemyManager.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Events\Event.cs" />
-    <Compile Include="Events\MessageEvent.cs" />
     <Compile Include="GraphicsHelper.cs" />
     <Compile Include="Items\Armour.cs" />
     <Compile Include="Items\EquippableItem.cs" />

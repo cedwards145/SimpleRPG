@@ -164,6 +164,11 @@ namespace SimpleRPG
                     facing = Facing.Up;
         }
 
+        public Facing getFacing()
+        {
+            return facing;
+        }
+
         public static Point facingToPoint(Facing face)
         {
             switch (face)
@@ -202,6 +207,18 @@ namespace SimpleRPG
             }
         }
 
+        public static Facing intToFacing(int value)
+        {
+            switch (value)
+            {
+                case 3: return Facing.Up;
+                case 0: return Facing.Down;
+                case 1: return Facing.Left;
+                case 2: return Facing.Right;
+                default: return Facing.Down;
+            }
+        }
+
         public void setContainingMap(TileMap value)
         {
             containingMap = value;
@@ -220,6 +237,11 @@ namespace SimpleRPG
         public void setPosition(int x, int y)
         {
             location = new Point(x, y);
+        }
+
+        public void setOffset(int x, int y)
+        {
+            offset = new Point(x, y);
         }
 
         public int CompareTo(MapObject other)

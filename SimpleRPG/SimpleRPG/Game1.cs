@@ -20,8 +20,8 @@ namespace SimpleRPG
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        protected GraphicsDeviceManager graphics;
+        protected SpriteBatch spriteBatch;
         
         private MapObject player;
         private Camera camera;
@@ -29,7 +29,7 @@ namespace SimpleRPG
         private int screenWidth, screenHeight;
         private int graphicsScale;
 
-        private StateManager stateManager;
+        protected StateManager stateManager;
 
         private SpriteFont mainFont;
 
@@ -50,41 +50,47 @@ namespace SimpleRPG
 
         private void loadOptions()
         {
-            XmlTextReader reader = new XmlTextReader("settings.xml");
-            string windowStyle = "window";
-
-            while (reader.Read())
+            screenHeight = 720;
+            screenWidth = 1280;
+            try
             {
-                if (reader.IsStartElement())
+                XmlTextReader reader = new XmlTextReader("settings.xml");
+                string windowStyle = "window";
+
+                while (reader.Read())
                 {
-                    if (reader.Name == "width")
-                        screenWidth = int.Parse(reader.ReadString());
-                    else if (reader.Name == "height")
-                        screenHeight = int.Parse(reader.ReadString());
-                    else if (reader.Name == "style")
-                        windowStyle = reader.ReadString();
+                    if (reader.IsStartElement())
+                    {
+                        if (reader.Name == "width")
+                            screenWidth = int.Parse(reader.ReadString());
+                        else if (reader.Name == "height")
+                            screenHeight = int.Parse(reader.ReadString());
+                        else if (reader.Name == "style")
+                            windowStyle = reader.ReadString();
+                    }
                 }
-            }
 
-            reader.Close();
+                reader.Close();
 
-            // Create a fullscreen window
-            if (windowStyle == "fullscreen")
-            {
-                screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                screenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                // Create a fullscreen window
+                if (windowStyle == "fullscreen")
+                {
+                    screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                    screenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
-                graphics.IsFullScreen = true;
+                    graphics.IsFullScreen = true;
+                }
+                // Create a borderless window
+                else if (windowStyle == "borderless")
+                {
+                    IntPtr hWnd = this.Window.Handle;
+                    var control = System.Windows.Forms.Control.FromHandle(hWnd);
+                    var form = control.FindForm();
+                    form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                }
+                // Otherwise, a regular window will be created
             }
-            // Create a borderless window
-            else if (windowStyle == "borderless")
-            {
-                IntPtr hWnd = this.Window.Handle;
-                var control = System.Windows.Forms.Control.FromHandle(hWnd);
-                var form = control.FindForm();
-                form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            }
-            // Otherwise, a regular window will be created
+            catch (Exception) { }
 
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.PreferredBackBufferWidth = screenWidth;
@@ -199,7 +205,7 @@ namespace SimpleRPG
             base.Draw(gameTime);
         }
 
-        public GameState getFirstGameState()
+        public virtual GameState getFirstGameState()
         {
             TileMap map = new TileMap(this, "cave");
             player = Player.getParty()[0].getMapObject();
