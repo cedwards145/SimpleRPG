@@ -109,7 +109,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIBattler.cs" />
-    <Compile Include="Animation.cs" />
+    <Compile Include="SpriteAnimation.cs" />
+    <Compile Include="WindowAnimation.cs" />
     <Compile Include="Battler.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Clusterer.cs" />

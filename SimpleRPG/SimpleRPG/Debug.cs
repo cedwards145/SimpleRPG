@@ -8,7 +8,7 @@ namespace SimpleRPG
 {
     public static class Debug
     {
-        private static bool debugging = true;
+        public static readonly bool DEBUGGING = true;
         private static bool tint = false;
 
         public static void update()
@@ -24,7 +24,7 @@ namespace SimpleRPG
 
         public static bool tintTiles()
         {
-            return debugging && tint;
+            return DEBUGGING && tint;
         }
     }
 }

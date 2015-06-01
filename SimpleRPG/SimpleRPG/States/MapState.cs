@@ -25,8 +25,8 @@ namespace SimpleRPG.States
 
             popOnEscape = false;
 
-            inAnimation = AnimationType.None;
-            outAnimation = AnimationType.None;
+            inAnimation = WindowAnimationType.None;
+            outAnimation = WindowAnimationType.None;
         }
 
         public override void update()
