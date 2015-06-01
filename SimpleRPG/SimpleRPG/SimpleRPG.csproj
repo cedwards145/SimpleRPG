@@ -114,8 +114,10 @@
     <Compile Include="ParticleEmitter.cs" />
     <Compile Include="Scripts\HelloWorldScript.cs" />
     <Compile Include="Scripts\IdleThread.cs" />
+    <Compile Include="Scripts\LibraryGuardScript.cs" />
     <Compile Include="Scripts\LibraryNPC1Script.cs" />
     <Compile Include="Scripts\Script.cs" />
+    <Compile Include="Scripts\ScriptArgs.cs" />
     <Compile Include="SpriteAnimation.cs" />
     <Compile Include="States\CraftingState.cs" />
     <Compile Include="WindowAnimation.cs" />
@@ -132,8 +134,6 @@
     <Compile Include="DrawableRectangle.cs" />
     <Compile Include="EnemyManager.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Events\Event.cs" />
-    <Compile Include="Events\MessageEvent.cs" />
     <Compile Include="GraphicsHelper.cs" />
     <Compile Include="Items\Armour.cs" />
     <Compile Include="Items\EquippableItem.cs" />

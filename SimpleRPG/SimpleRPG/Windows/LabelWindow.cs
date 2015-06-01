@@ -10,7 +10,6 @@ namespace SimpleRPG.Windows
     public class LabelWindow : Window
     {
         protected string text;
-        protected SpriteFont font;
         protected TextAlign align;
         protected Vector2 textPos;
         protected Color textColor;

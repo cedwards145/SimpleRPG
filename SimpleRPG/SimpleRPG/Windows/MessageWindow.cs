@@ -41,8 +41,10 @@ namespace SimpleRPG.Windows
         public override void draw(SpriteBatch spriteBatch)
         {
             base.draw(spriteBatch);
+            int scale = gameRef.getGraphicsScale();
+
             string messageSubString = message.Substring(0, messageLength);
-            spriteBatch.DrawString(font, messageSubString, new Vector2(location.X + 10, location.Y + 10), 
+            spriteBatch.DrawString(font, messageSubString, new Vector2(location.X + 10 * scale, location.Y + 10 * scale), 
                                    ColorScheme.mainTextColor * opacity);
         }
     }

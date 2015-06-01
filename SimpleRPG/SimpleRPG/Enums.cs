@@ -52,3 +52,9 @@ namespace SimpleRPG.Crafting
     /// </summary>
     public enum CraftAction { Chop, Cook, Crush, Brew };
 }
+
+namespace SimpleRPG.Scripts
+{
+    public enum ScriptBehaviour { Default, NonBlocking };
+    public enum ScriptActivationType { Action, Collision };
+}

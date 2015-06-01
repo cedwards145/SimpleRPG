@@ -10,9 +10,15 @@ namespace SimpleRPG.Scripts
         protected override void main()
         {
             base.main();
+
+            Facing prevFacing = args.callingObject.getFacing();
+            args.callingObject.face(Player.getPlayerMapObject());
+
             message("Please don't disturb me, I'm busy working.");
             message("...");
             message("Seriously, go away!");
+
+            args.callingObject.setFacing(prevFacing);
         }
     }
 }

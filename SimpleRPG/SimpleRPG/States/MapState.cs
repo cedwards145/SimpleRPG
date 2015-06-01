@@ -35,7 +35,7 @@ namespace SimpleRPG.States
             map.update();
             camera.update();
 
-            if (Input.isButtonPressed(ControllerButton.back))
+            if (Input.isButtonPressed(ControllerButton.back) && Player.canAccessMenu())
                 stateManager.addState(new PauseState(gameRef, null, stateManager));
 
             if (Input.isButtonDown(ControllerButton.up))

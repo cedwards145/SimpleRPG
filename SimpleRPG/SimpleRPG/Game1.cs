@@ -22,6 +22,8 @@ namespace SimpleRPG
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        private long elapsedGameTime = 0;
         
         private MapObject player;
         private Camera camera;
@@ -164,6 +166,8 @@ namespace SimpleRPG
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            elapsedGameTime++;
+
             // Static update functions
             Input.update();
             Debug.update();
@@ -183,7 +187,6 @@ namespace SimpleRPG
             }
             else if (Debug.DEBUGGING && Input.isKeyPressed(Keys.M))
             {
-                Scripts.Script.runScript("HelloWorldScript");
             }
 
             base.Update(gameTime);
@@ -241,6 +244,11 @@ namespace SimpleRPG
         public int getHeight()
         {
             return screenHeight;
+        }
+
+        public long getElapsedGameTime()
+        {
+            return elapsedGameTime;
         }
 
         public Camera getCamera()

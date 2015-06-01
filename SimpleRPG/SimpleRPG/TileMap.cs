@@ -80,6 +80,7 @@ namespace SimpleRPG
             Color objectLightColor = new Color(0, 0, 0, 0);
             string objectLightTexture = "light";
             string onActionScript = "";
+            string objectName = "";
 
             while (reader.Read())
             {
@@ -162,6 +163,7 @@ namespace SimpleRPG
                             // Record new position
                             objectX = (int)float.Parse(reader.GetAttribute("x"));
                             objectY = (int)float.Parse(reader.GetAttribute("y"));
+                            objectName = reader.GetAttribute("name");
 
                         }
 
@@ -224,7 +226,7 @@ namespace SimpleRPG
                                 else if (attr == "lightTexture")
                                     objectLightTexture = reader.GetAttribute("value");
                                 else if (attr == "lightFlickers")
-                                    objectLightFlickers = true;
+                                    objectLightFlickers = bool.Parse(reader.GetAttribute("value"));
                                 else if (attr == "onAction")
                                     onActionScript = reader.GetAttribute("value");
                             }
@@ -273,6 +275,7 @@ namespace SimpleRPG
                             o.setContainingMap(this);
                             o.setFacing(objectFacing);
                             o.setOnActionScript(onActionScript);
+                            o.setName(objectName);
                             ol.addObject(o);
 
                             if (objectEmitsLight)
@@ -285,7 +288,6 @@ namespace SimpleRPG
                         }
                         break;
                     default:
-
                         break;
                 }
 
@@ -314,7 +316,7 @@ namespace SimpleRPG
 
         public void draw(SpriteBatch spriteBatch, Point firstTile, int tilesAcross, int tilesDown, Point offset, int scale)
         {
-            renderLights(spriteBatch);
+            renderLights(spriteBatch, offset);
                         
             foreach (DrawableLayer layer in layerList)
             {
@@ -329,7 +331,7 @@ namespace SimpleRPG
 
         #region Lighting Methods 
 
-        protected void renderLights(SpriteBatch spriteBatch)
+        protected void renderLights(SpriteBatch spriteBatch, Point offset)
         {
             // End first draw call
             spriteBatch.End();
@@ -347,7 +349,7 @@ namespace SimpleRPG
             foreach (MapObject mapObject in objects)
             {
                 if (mapObject.givesOffLight())
-                    mapObject.drawLight(spriteBatch);
+                    mapObject.drawLight(spriteBatch, offset);
             }
 
             spriteBatch.End();

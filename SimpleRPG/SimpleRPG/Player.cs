@@ -14,6 +14,7 @@ namespace SimpleRPG
 
         protected static BattleState currentBattle;
         protected static bool inBattle;
+        protected static bool menuAccess = true;
 
         public static void initialize(Game1 game)
         {
@@ -76,5 +77,33 @@ namespace SimpleRPG
         {
             return party[0].getMapObject();
         }
+
+        #region Menu Access Methods
+
+        public static bool canAccessMenu()
+        {
+            return menuAccess;
+        }
+
+        public static void setCanAccessMenu(bool value)
+        {
+            menuAccess = value;
+        }
+
+        #endregion
+
+        #region Movement Access Methods
+
+        public static bool canMove()
+        {
+            return party[0].getMapObject().ableToMove();
+        }
+
+        public static void setCanMove(bool value)
+        {
+            party[0].getMapObject().setCanMove(value);
+        }
+
+        #endregion
     }
 }

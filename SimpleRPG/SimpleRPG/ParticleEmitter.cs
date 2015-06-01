@@ -67,7 +67,7 @@ namespace SimpleRPG
             }
         }
 
-        public override void drawLight(SpriteBatch spriteBatch)
+        public override void drawLight(SpriteBatch spriteBatch, Point mapOffset)
         {
             //base.drawLight(spriteBatch);
 

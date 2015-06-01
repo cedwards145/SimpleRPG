@@ -27,7 +27,9 @@ namespace SimpleRPG
         protected Facing facing;
         protected TileMap containingMap;
         protected bool moving = false;
+        protected bool canMove = true;
         protected Passability passability;
+        protected string name;
 
         private bool smoothMoving = true;
         protected string onActionScript;
@@ -154,7 +156,7 @@ namespace SimpleRPG
         public void action()
         {
             if (onActionScript != "")
-                Script.runScript(onActionScript);
+                Script.runScript(onActionScript, new ScriptArgs(ScriptActivationType.Action, this));
         }
 
         #endregion
@@ -163,7 +165,7 @@ namespace SimpleRPG
 
         public void move(Point moveValue)
         {
-            if (!moving)
+            if (!moving && canMove)
             {
                 facing = pointToFacing(moveValue);
                 bool destination = containingMap.getPassability(location.X + moveValue.X, location.Y + moveValue.Y);
@@ -227,9 +229,19 @@ namespace SimpleRPG
 
         #region Mutator Methods
         
+        public void setName(string newName)
+        {
+            name = newName;
+        }
+
         public void setOnActionScript(string value)
         {
             onActionScript = value;
+        }
+
+        public void setCanMove(bool value)
+        {
+            canMove = value;
         }
 
         public void face(Point point)
@@ -247,6 +259,11 @@ namespace SimpleRPG
                     facing = Facing.Down;
                 else
                     facing = Facing.Up;
+        }
+
+        public void face(MapObject other)
+        {
+            face(other.location);
         }
 
         public void setContainingMap(TileMap value)
@@ -278,9 +295,19 @@ namespace SimpleRPG
 
         #region Accessor Methods
 
+        public string getName()
+        {
+            return name;
+        }
+
         public TileMap getContainingMap()
         {
             return containingMap;
+        }
+
+        public Facing getFacing()
+        {
+            return facing;
         }
 
         public Point getTileFacing()
@@ -354,6 +381,11 @@ namespace SimpleRPG
             return map == containingMap;
         }
 
+        public bool ableToMove()
+        {
+            return canMove;
+        }
+
         #endregion
 
         #region Lighting Methods
@@ -371,7 +403,7 @@ namespace SimpleRPG
             lightFlicker = flicker;
         }
 
-        public virtual void drawLight(SpriteBatch spriteBatch)
+        public virtual void drawLight(SpriteBatch spriteBatch, Point mapOffset)
         {
             if (emitsLight)
             {
@@ -393,13 +425,13 @@ namespace SimpleRPG
 
                 // Position calculated as: location (in tiles) * tileSize + half of a tile (to center on a tile,
                 //                         + any offset from animation, - half the size of the light texture
-                Point centerPosition = new Point(location.X * tileSize + (tileSize / 2) + offset.X - (lightWidth / 2),
-                                                 location.Y * tileSize + (tileSize / 2) + offset.Y - (lightHeight / 2));
+                Point centerPosition = new Point(location.X * tileSize + (tileSize / 2) + offset.X - mapOffset.X - (lightWidth / 2),
+                                                 location.Y * tileSize + (tileSize / 2) + offset.Y - mapOffset.Y - (lightHeight / 2));
 
                 centerPosition.X *= scale;
                 centerPosition.Y *= scale;
 
-                Point transformedPoint = camera.transformPoint(centerPosition);
+                Point transformedPoint = centerPosition; // camera.transformPoint(centerPosition);
                 spriteBatch.Draw(lightTexture, new Rectangle(transformedPoint.X,
                                                              transformedPoint.Y,
                                                              lightWidth * scale,
