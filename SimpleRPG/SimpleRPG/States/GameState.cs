@@ -77,7 +77,9 @@ namespace SimpleRPG.States
             }
         }
 
-        // Called as a state begins to exit
+        /// <summary>
+        /// Called as a state begins to exit
+        /// </summary>
         public virtual void exit()
         {
             if (parentState != null)
@@ -86,7 +88,9 @@ namespace SimpleRPG.States
             closing = true;
         }
         
-        // Called when a state actually removes itself
+        /// <summary>
+        /// Called when a state actually removes itself
+        /// </summary>
         public virtual void close()
         {
             stateManager.popState();

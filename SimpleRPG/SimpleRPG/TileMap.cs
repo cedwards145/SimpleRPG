@@ -22,6 +22,8 @@ namespace SimpleRPG
 
         private RenderTarget2D lightRenderTarget;
 
+        #region Constructors
+
         // Read a map PROPERLY from a .tmx XML file
         public TileMap(Game1 game, string filename)
         {
@@ -77,6 +79,7 @@ namespace SimpleRPG
             bool objectLightFlickers = false;
             Color objectLightColor = new Color(0, 0, 0, 0);
             string objectLightTexture = "light";
+            string onActionScript = "";
 
             while (reader.Read())
             {
@@ -222,6 +225,8 @@ namespace SimpleRPG
                                     objectLightTexture = reader.GetAttribute("value");
                                 else if (attr == "lightFlickers")
                                     objectLightFlickers = true;
+                                else if (attr == "onAction")
+                                    onActionScript = reader.GetAttribute("value");
                             }
                         }
 
@@ -267,6 +272,7 @@ namespace SimpleRPG
                             o.setPassability(objectPassability);
                             o.setContainingMap(this);
                             o.setFacing(objectFacing);
+                            o.setOnActionScript(onActionScript);
                             ol.addObject(o);
 
                             if (objectEmitsLight)
@@ -286,8 +292,12 @@ namespace SimpleRPG
 
             }
 
-            addObject(new ParticleEmitter(game, "emitter", 3, 5));
+            //addObject(new ParticleEmitter(game, "emitter", 3, 5));
         }
+
+        #endregion
+
+        #region Update / Draw
 
         public override void update()
         {
@@ -314,6 +324,10 @@ namespace SimpleRPG
 
             drawLights(spriteBatch);
         }
+
+        #endregion
+
+        #region Lighting Methods 
 
         protected void renderLights(SpriteBatch spriteBatch)
         {
@@ -353,6 +367,10 @@ namespace SimpleRPG
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
         }
 
+        #endregion
+
+        #region Object Management Methods
+
         public void addObject(MapObject toAdd)
         {
             toAdd.setContainingMap(this);
@@ -365,7 +383,10 @@ namespace SimpleRPG
             objectLayer.removeObject(toRemove);
         }
 
-        // ACCESSOR METHODS
+        #endregion
+
+        #region Accessor Methods
+
         public int getWidth()
         {
             return width;
@@ -400,6 +421,8 @@ namespace SimpleRPG
             }
             return value;
         }
+
+        #endregion
 
         public void tintTile(int x, int y, Color tintColor)
         {

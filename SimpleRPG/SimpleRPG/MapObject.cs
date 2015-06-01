@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SimpleRPG.Scripts;
 
 namespace SimpleRPG
 {
@@ -29,6 +30,7 @@ namespace SimpleRPG
         protected Passability passability;
 
         private bool smoothMoving = true;
+        protected string onActionScript;
 
         // LIGHTING
         protected Texture2D lightTexture;
@@ -78,6 +80,8 @@ namespace SimpleRPG
         }
 
         #endregion
+
+        #region Update / Draw
 
         public virtual void update()
         {
@@ -142,6 +146,18 @@ namespace SimpleRPG
 
             spriteBatch.Draw(spritesheet, destination, source, Color.White * opacity);
         }
+
+        #endregion
+
+        #region Script Methods
+
+        public void action()
+        {
+            if (onActionScript != "")
+                Script.runScript(onActionScript);
+        }
+
+        #endregion
 
         #region Helper Methods
 
@@ -210,6 +226,11 @@ namespace SimpleRPG
         #endregion
 
         #region Mutator Methods
+        
+        public void setOnActionScript(string value)
+        {
+            onActionScript = value;
+        }
 
         public void face(Point point)
         {
@@ -260,6 +281,12 @@ namespace SimpleRPG
         public TileMap getContainingMap()
         {
             return containingMap;
+        }
+
+        public Point getTileFacing()
+        {
+            Point facingAsPoint = facingToPoint(facing);
+            return new Point(location.X + facingAsPoint.X, location.Y + facingAsPoint.Y);
         }
 
         /// <summary>

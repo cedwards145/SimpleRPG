@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SimpleRPG.Scripts;
 
 namespace SimpleRPG
 {
@@ -12,6 +13,7 @@ namespace SimpleRPG
     {
         private static Random random;
         private static Game1 game;
+        private static IdleThread scriptThread;
 
         /// <summary>
         /// Must be called before any methods from this class can be used
@@ -21,6 +23,7 @@ namespace SimpleRPG
         {
             game = gameRef;
             random = new Random();
+            scriptThread = new IdleThread();
         }
 
         /// <summary>
@@ -30,6 +33,15 @@ namespace SimpleRPG
         public static Game1 getGameRef()
         {
             return game;
+        }
+
+        /// <summary>
+        /// Returns the IdleThread to run scripts on
+        /// </summary>
+        /// <returns>A thread that can be given work to do</returns>
+        public static IdleThread getScriptThread()
+        {
+            return scriptThread;
         }
 
         /// <summary>

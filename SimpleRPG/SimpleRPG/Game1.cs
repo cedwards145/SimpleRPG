@@ -32,6 +32,7 @@ namespace SimpleRPG
         private StateManager stateManager;
 
         private SpriteFont mainFont;
+        private SpriteFont debugFont;
 
         public Game1()
         {
@@ -101,6 +102,12 @@ namespace SimpleRPG
             base.Initialize();
         }
 
+        protected override void EndRun()
+        {
+            base.EndRun();
+            Utilities.getScriptThread().kill();
+        }
+
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -110,6 +117,7 @@ namespace SimpleRPG
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             mainFont = Content.Load<SpriteFont>(@"fonts\fixedsys" + graphicsScale);
+            debugFont = Content.Load<SpriteFont>(@"fonts\debug");
 
             // Initialize utilities class
             Utilities.initialize(this);
@@ -156,6 +164,7 @@ namespace SimpleRPG
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            // Static update functions
             Input.update();
             Debug.update();
             Lighting.update();
@@ -168,13 +177,13 @@ namespace SimpleRPG
             if (stateManager != null)
                 stateManager.update();
 
-            if (Input.isKeyPressed(Keys.B))
+            if (Debug.DEBUGGING && Input.isKeyPressed(Keys.B))
             {
-                stateManager.addState(new BattleState(this, null, stateManager));
+                //stateManager.addState(new BattleState(this, null, stateManager));
             }
-            else if (Input.isKeyPressed(Keys.M))
+            else if (Debug.DEBUGGING && Input.isKeyPressed(Keys.M))
             {
-                stateManager.addState(new MessageState(this, null, stateManager, "A fairly long test message"));
+                Scripts.Script.runScript("HelloWorldScript");
             }
 
             base.Update(gameTime);
@@ -194,10 +203,17 @@ namespace SimpleRPG
 
             if (stateManager!= null)
                 stateManager.draw(spriteBatch);
-            
+
             spriteBatch.End();
             
             base.Draw(gameTime);
+        }
+
+        public MessageState showMessage(string text)
+        {
+            MessageState state = new MessageState(this, null, stateManager, text);
+            stateManager.addState(state);
+            return state;
         }
 
         public GameState getFirstGameState()
@@ -241,6 +257,7 @@ namespace SimpleRPG
         {
             return mainFont;
         }    
+
     }
 
 }

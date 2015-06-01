@@ -35,6 +35,12 @@ namespace SimpleRPG.Windows
             moveCursorDown();
         }
 
+        protected void setLastIndex()
+        {
+            index = options.Count;
+            moveCursorUp();
+        }
+
         public override void draw(SpriteBatch spriteBatch)
         {
             base.draw(spriteBatch);
@@ -110,6 +116,14 @@ namespace SimpleRPG.Windows
             }
         }
 
+        protected void checkCursorLegal()
+        {
+            if (index < 0)
+                setFirstIndex();
+            else if (index >= options.Count)
+                setLastIndex();
+        }
+
         protected void moveCursorUp()
         {
             if (optionStates.Contains(true))
@@ -125,14 +139,14 @@ namespace SimpleRPG.Windows
                         index = options.Count - 1;
                         indexOffset = (int)MathHelper.Clamp(options.Count - noOptionsInWindow, 0, options.Count);
                     }
-                } while (!optionStates[index + indexOffset]);
+                } while (!optionStates[index]);
             }
         }
 
         public void setOptions(string[] items, bool[] enabled)
         {
             options = new List<string>(items);
-
+            optionStates.Clear();
             // Enable all options by default
             for (int tempIndex = 0; tempIndex < enabled.Count(); tempIndex++)
                 optionStates.Add(enabled[tempIndex]);
@@ -142,7 +156,7 @@ namespace SimpleRPG.Windows
             int itemSize = (int)font.MeasureString("I").Y;
 
             height = (noOptionsInWindow * itemSize) + (windowskinTileSize * 2);
-            setFirstIndex();
+            checkCursorLegal();
         }
         public void setOptions(string[] items)
         {

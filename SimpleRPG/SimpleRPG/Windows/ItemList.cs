@@ -17,6 +17,7 @@ namespace SimpleRPG.Windows
         {
             itemContainer = items;
             string[] itemNames = items.getItemNames();
+
             setOptions(itemNames);
         }
 
