@@ -14,7 +14,9 @@ namespace SimpleRPG
     /// <summary>
     /// Used to represent the four directions of movement on tilemaps
     /// </summary>
-    public enum Facing { Up, Down, Left, Right };
+    public enum Facing { Up, Down, Left, Right, None };
+
+    public enum Moves { MoveUp, MoveDown, MoveLeft, MoveRight, FaceUp, FaceDown, FaceLeft, FaceRight, None };
 
     /// <summary>
     /// Used by Tiles and MapObjects to determine whether objects can pass through them.
@@ -56,5 +58,5 @@ namespace SimpleRPG.Crafting
 namespace SimpleRPG.Scripts
 {
     public enum ScriptBehaviour { Default, NonBlocking };
-    public enum ScriptActivationType { Action, Collision };
+    public enum ScriptActivationType { Action, Collision, Load };
 }

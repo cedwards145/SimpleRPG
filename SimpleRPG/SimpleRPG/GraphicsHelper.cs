@@ -134,10 +134,11 @@ namespace SimpleRPG
             return flipped;
         }
 
-        public static string[] fitStringToBox(string text, SpriteFont font, Rectangle box)
+        public static string fitStringToBox(string text, SpriteFont font, Rectangle box)
         {
             string[] words = text.Split(' ');
-            List<string> messages = new List<string>();
+            for (int index = 0; index < words.Count(); index++)
+                words[index] = words[index] + " ";
 
             string textSoFar = "";
             Vector2 size;
@@ -152,10 +153,9 @@ namespace SimpleRPG
                 if (size.X > box.Width)
                     textFittedHorizontally += "\n";
 
-                textFittedHorizontally += words[currentWord] + " ";
+                textFittedHorizontally += words[currentWord];
 
-                size = font.MeasureString(textFittedHorizontally);
-
+                /*
                 // Check that the message fits vertically in the target box
                 if (size.Y > box.Height)
                 {
@@ -165,18 +165,22 @@ namespace SimpleRPG
                     textSoFar = words[currentWord] + " ";
                 }
                 else
-                    // Otherwise, textFittedHorizontally also fits vertically, so it can be saved in 
-                    // textSoFar
-                    textSoFar = textFittedHorizontally;
+                 * 
+                */
+                // Otherwise, textFittedHorizontally also fits vertically, so it can be saved in 
+                // textSoFar
+                textSoFar = textFittedHorizontally;
 
+                /*
                 StringBuilder builder = new StringBuilder(textSoFar);
                 if (builder[0] == '\n')
                     builder.Remove(0, 1);
                 textSoFar = builder.ToString();
+                 */
             }
-            messages.Add(textSoFar);
+            //messages.Add(textSoFar);
 
-            return messages.ToArray();
+            return textSoFar;
         }
 
 

@@ -34,6 +34,7 @@ namespace SimpleRPG.Items
             addNewItem(new EquippableItem("Carved Wood Staff", "A hand-carved mage's weapon", 14));
             addNewItem(new EquippableItem("Worn Axe", "An old looking two-handed axe", 6));
             addNewItem(new UsableItem("Throwing Knife", "A small dagger to be thrown", 11, ValidTargets.Enemies, DamageType.Harming, 50));
+            addNewItem(new UsableItem("Beer", "A bottle of beer!", 13, ValidTargets.All, DamageType.Healing, 1));
         }
     }
 }

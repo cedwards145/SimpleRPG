@@ -25,6 +25,7 @@ namespace SimpleRPG.Scripts
         public void kill()
         {
             alive = false;
+            thread.Abort();
         }
 
         private void loop()

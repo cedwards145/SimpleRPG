@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using SimpleRPG.States;
 using SimpleRPG.Items;
+using Microsoft.Xna.Framework;
+using SimpleRPG.Tilemap;
 
 namespace SimpleRPG
 {
@@ -30,9 +32,19 @@ namespace SimpleRPG
             return inventory;
         }
 
+        public static void giveItem(string itemName)
+        {
+            inventory.addItem(itemName);
+        }
+
         public static void giveItem(Item item)
         {
             inventory.addItem(item);
+        }
+
+        public static void takeItem(string itemName)
+        {
+            inventory.removeItem(itemName);
         }
 
         public static void takeItem(Item item)
@@ -76,6 +88,18 @@ namespace SimpleRPG
         public static MapObject getPlayerMapObject()
         {
             return party[0].getMapObject();
+        }
+
+        public void emitLight(string lightName, Color color, bool flicker)
+        {
+            MapObject mapObject = party[0].getMapObject();
+            mapObject.givesOffLight(lightName, color, flicker);
+        }
+
+        public void stopEmittingLight()
+        {
+            MapObject mapObject = party[0].getMapObject();
+            mapObject.stopGivingOffLight();
         }
 
         #region Menu Access Methods

@@ -16,7 +16,12 @@ namespace SimpleRPG.Windows
         public MessageWindow(Game1 game, string reqMessage)
             :base(game, new Point(), 300 * game.getGraphicsScale(), 64 * game.getGraphicsScale(), "windowskin")
         {
-            message = reqMessage;
+            int scale = gameRef.getGraphicsScale();
+
+            message = GraphicsHelper.fitStringToBox(reqMessage, font, 
+                                                    new Rectangle(0, 0, 
+                                                                  width - (20 * scale), 
+                                                                  height - (20 * scale)));
             setPosition(new Point(GraphicsHelper.calculateCenterPositionP(width, height).X, 
                                   game.getHeight() - height - (10 * game.getGraphicsScale())));
         }

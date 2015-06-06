@@ -5,6 +5,7 @@ using System.Text;
 using SimpleRPG.Items;
 using SimpleRPG.States;
 using Microsoft.Xna.Framework;
+using SimpleRPG.Tilemap;
 
 namespace SimpleRPG
 {
@@ -67,7 +68,7 @@ namespace SimpleRPG
             : base(reqName, 0, 0, 0, 0)
         {
             mapObject = new MapObject(Utilities.getGameRef(), battlerImageName, 0, 0);
-            mapObject.givesOffLight("light", Color.Yellow, true);
+            mapObject.setPassability(Passability.False);
 
             exp = 0;
             expToNextLevel = 100;

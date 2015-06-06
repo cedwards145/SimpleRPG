@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using SimpleRPG.Windows;
 using SimpleRPG.Widgets;
+using SimpleRPG.Tilemap;
 
 namespace SimpleRPG.States
 {

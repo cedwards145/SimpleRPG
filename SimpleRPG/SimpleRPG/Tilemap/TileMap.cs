@@ -8,7 +8,7 @@ using System.IO;
 using System.Xml;
 using Microsoft.Xna.Framework.Input;
 
-namespace SimpleRPG
+namespace SimpleRPG.Tilemap
 {
     public class TileMap : Drawable
     {
@@ -80,6 +80,7 @@ namespace SimpleRPG
             Color objectLightColor = new Color(0, 0, 0, 0);
             string objectLightTexture = "light";
             string onActionScript = "";
+            string onLoadScript = "";
             string objectName = "";
 
             while (reader.Read())
@@ -159,6 +160,8 @@ namespace SimpleRPG
 
                             // Clear any information from old objects
                             objectTextureName = "";
+                            onActionScript = "";
+                            onLoadScript = "";
 
                             // Record new position
                             objectX = (int)float.Parse(reader.GetAttribute("x"));
@@ -229,6 +232,8 @@ namespace SimpleRPG
                                     objectLightFlickers = bool.Parse(reader.GetAttribute("value"));
                                 else if (attr == "onAction")
                                     onActionScript = reader.GetAttribute("value");
+                                else if (attr == "onLoad")
+                                    onLoadScript = reader.GetAttribute("value");
                             }
                         }
 
@@ -275,6 +280,7 @@ namespace SimpleRPG
                             o.setContainingMap(this);
                             o.setFacing(objectFacing);
                             o.setOnActionScript(onActionScript);
+                            o.setOnLoadScript(onLoadScript);
                             o.setName(objectName);
                             ol.addObject(o);
 

@@ -74,6 +74,13 @@ namespace SimpleRPG.Items
             return itemQuantities.Keys.Count;
         }
 
+        public int countItem(string itemName)
+        {
+            if (itemQuantities.Keys.Contains(itemName))
+                return itemQuantities[itemName];
+            return 0;
+        }
+
         public string[] getItemNames()
         {
             string[] itemNames = new string[count()];

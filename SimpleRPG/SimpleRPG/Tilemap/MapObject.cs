@@ -6,11 +6,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SimpleRPG.Scripts;
 
-namespace SimpleRPG
+namespace SimpleRPG.Tilemap
 {
     public class MapObject : IComparable<MapObject>
     {
         private static int nextID = 1;
+        protected MoveRoute moveRoute = null;
 
         protected int id;
         protected Point location, offset;
@@ -32,7 +33,7 @@ namespace SimpleRPG
         protected string name;
 
         private bool smoothMoving = true;
-        protected string onActionScript;
+        protected string onActionScript, onLoadScript = "";
 
         // LIGHTING
         protected Texture2D lightTexture;
@@ -54,7 +55,8 @@ namespace SimpleRPG
 
             location = new Point(xCoord, yCoord);
             offset = new Point();
-            spritesheet = game.Content.Load<Texture2D>(@"graphics\" + textureName);
+            if (textureName != "")
+                spritesheet = game.Content.Load<Texture2D>(@"graphics\" + textureName);
             facing = Facing.Down;
         }
 
@@ -64,6 +66,10 @@ namespace SimpleRPG
             nextID++;
 
             offset = new Point();
+
+            if (textureName == "")
+                textureName = "blank";
+
             spritesheet = game.Content.Load<Texture2D>(@"graphics\" + textureName);
 
             // Transform coords from Tiled coords to map coords
@@ -87,6 +93,12 @@ namespace SimpleRPG
 
         public virtual void update()
         {
+            if (onLoadScript != "")
+            {
+                load();
+                onLoadScript = "";
+            }
+
             if (containingMap != null)
             {
                 Point moveValue = facingToPoint(facing);
@@ -106,6 +118,16 @@ namespace SimpleRPG
                             location.Y += moveValue.Y;
                         }
                     }
+                }
+                else if (moveRoute != null)
+                {
+                    Moves nextMove = moveRoute.peek();
+                    if (nextMove != Moves.None)
+                    {
+                        handleMove(nextMove);
+                    }
+                    if (moveRoute.isCompleted())
+                        moveRoute = null;
                 }
 
                 if (smoothMoving)
@@ -129,24 +151,66 @@ namespace SimpleRPG
             }
         }
 
+        private void handleMove(Moves nextMove)
+        {
+            switch (nextMove)
+            {
+                case Moves.MoveUp:
+                    move(Facing.Up);
+                    break;
+                case Moves.MoveDown:
+                    move(Facing.Down);
+                    break;
+                case Moves.MoveLeft:
+                    move(Facing.Left);
+                    break;
+                case Moves.MoveRight:
+                    move(Facing.Right);
+                    break;
+                case Moves.FaceUp:
+                    setFacing(Facing.Up);
+                    moveRoute.dequeue();
+                    break;
+                case Moves.FaceDown:
+                    setFacing(Facing.Down);
+                    moveRoute.dequeue();
+                    break;
+                case Moves.FaceLeft:
+                    setFacing(Facing.Left);
+                    moveRoute.dequeue();
+                    break;
+                case Moves.FaceRight:
+                    setFacing(Facing.Right);
+                    moveRoute.dequeue();
+                    break;
+                default:
+                    break;
+            }
+            if (moving)
+                moveRoute.dequeue();
+        }
+
         public virtual void draw(SpriteBatch spriteBatch, float opacity, Point mapOffset, int scale)
         {
-            int frameWidth = spritesheet.Width / 4;
-            int frameHeight = spritesheet.Height / 4;
+            if (spritesheet != null)
+            {
+                int frameWidth = spritesheet.Width / 4;
+                int frameHeight = spritesheet.Height / 4;
 
-            int tileSize = containingMap.getTileSize();
+                int tileSize = containingMap.getTileSize();
 
-            Rectangle destination = new Rectangle(location.X * tileSize - ((frameWidth - tileSize) / 2) + offset.X - mapOffset.X,  //  
-                                                  location.Y * tileSize - frameHeight + tileSize + offset.Y - mapOffset.Y,         //  
-                                                  frameWidth, frameHeight);
-            destination.X *= scale;
-            destination.Y *= scale;
-            destination.Width *= scale;
-            destination.Height *= scale;
+                Rectangle destination = new Rectangle(location.X * tileSize - ((frameWidth - tileSize) / 2) + offset.X - mapOffset.X,  //  
+                                                      location.Y * tileSize - frameHeight + tileSize + offset.Y - mapOffset.Y,         //  
+                                                      frameWidth, frameHeight);
+                destination.X *= scale;
+                destination.Y *= scale;
+                destination.Width *= scale;
+                destination.Height *= scale;
 
-            Rectangle source = new Rectangle(frame * frameWidth, facingToInt(facing) * frameHeight, frameWidth, frameHeight);
+                Rectangle source = new Rectangle(frame * frameWidth, facingToInt(facing) * frameHeight, frameWidth, frameHeight);
 
-            spriteBatch.Draw(spritesheet, destination, source, Color.White * opacity);
+                spriteBatch.Draw(spritesheet, destination, source, Color.White * opacity);
+            }
         }
 
         #endregion
@@ -156,12 +220,17 @@ namespace SimpleRPG
         public void action()
         {
             if (onActionScript != "")
-                Script.runScript(onActionScript, new ScriptArgs(ScriptActivationType.Action, this));
+                Script.runScriptAsync(onActionScript, new ScriptArgs(ScriptActivationType.Action, this));
+        }
+
+        protected void load()
+        {
+            Script.runScriptSync(onLoadScript, new ScriptArgs(ScriptActivationType.Load, this));
         }
 
         #endregion
 
-        #region Helper Methods
+        #region Helper / Move Methods
 
         public void move(Point moveValue)
         {
@@ -172,6 +241,11 @@ namespace SimpleRPG
 
                 moving = destination;
             }
+        }
+
+        public void move(Facing faceValue)
+        {
+            move(facingToPoint(faceValue));
         }
 
         public int CompareTo(MapObject other)
@@ -229,6 +303,11 @@ namespace SimpleRPG
 
         #region Mutator Methods
         
+        public void setMoveRoute(MoveRoute value)
+        {
+            moveRoute = value;
+        }
+
         public void setName(string newName)
         {
             name = newName;
@@ -237,6 +316,11 @@ namespace SimpleRPG
         public void setOnActionScript(string value)
         {
             onActionScript = value;
+        }
+
+        public void setOnLoadScript(string value)
+        {
+            onLoadScript = value;
         }
 
         public void setCanMove(bool value)
@@ -278,7 +362,8 @@ namespace SimpleRPG
 
         public void setFacing(Facing face)
         {
-            facing = face;
+            if (face != Facing.None)
+                facing = face;
         }
 
         public void setPosition(int x, int y)
@@ -401,6 +486,11 @@ namespace SimpleRPG
             lightTexture = Utilities.getGameRef().Content.Load<Texture2D>(@"graphics\" + lightName);
             lightColor = color;
             lightFlicker = flicker;
+        }
+
+        public void stopGivingOffLight()
+        {
+            emitsLight = false;
         }
 
         public virtual void drawLight(SpriteBatch spriteBatch, Point mapOffset)

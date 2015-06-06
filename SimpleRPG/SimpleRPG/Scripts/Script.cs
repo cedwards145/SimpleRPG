@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using SimpleRPG;
 using SimpleRPG.States;
-using System.Threading; 
+using SimpleRPG.Items; 
+using System.Threading;
+using SimpleRPG.Tilemap; 
 
 namespace SimpleRPG.Scripts
 {
@@ -20,20 +22,32 @@ namespace SimpleRPG.Scripts
             return script;
         }
 
-        public static void runScript(string scriptName, ScriptArgs args)
+        public static void runScriptSync(string scriptName, ScriptArgs args)
         {
             Script script = lookupScript(scriptName);
             script.args = args;
-            script.execute();
+            script.executeSync();
+        }
+
+        public static void runScriptAsync(string scriptName, ScriptArgs args)
+        {
+            Script script = lookupScript(scriptName);
+            script.args = args;
+            script.executeAsync();
         }
 
         public Script()
         { }
 
-        private void execute()
+        private void executeAsync()
         {
             IdleThread thread = Utilities.getScriptThread();
             thread.doWork(start);
+        }
+
+        private void executeSync()
+        {
+            start();
         }
 
         private bool canAccessMenu, canMove;
@@ -124,6 +138,31 @@ namespace SimpleRPG.Scripts
             Script script = lookupScript(scriptName);
             script.args = args;
             script.start();
+        }
+
+        protected void moveObject(MapObject toMove, MoveRoute route)
+        {
+            toMove.setMoveRoute(route);
+        }
+
+        protected bool playerHasItem(string itemName)
+        {
+            return Player.getInventory().contains(itemName);
+        }
+
+        protected int countItem(string itemName)
+        {
+            return Player.getInventory().countItem(itemName);
+        }
+
+        protected void giveItem(string itemName)
+        {
+            Player.giveItem(itemName);
+        }
+
+        protected void takeItem(string itemName)
+        {
+            Player.takeItem(itemName);
         }
     }
 }

@@ -12,6 +12,7 @@ using SimpleRPG.States;
 using SimpleRPG.Windows;
 using SimpleRPG.Items;
 using System.Xml;
+using SimpleRPG.Tilemap;
 
 namespace SimpleRPG
 {
@@ -126,7 +127,7 @@ namespace SimpleRPG
 
             // Initialize controller class
             Controller.initialize();
-            
+
             // Initialize graphics helper
             GraphicsHelper.setGame(this);
             GraphicsHelper.setup();
@@ -134,18 +135,20 @@ namespace SimpleRPG
 
             ItemManager.initialize();
             ItemContainer playerInventory = Player.getInventory();
-            playerInventory.addItem("Small Potion",  2);
+            playerInventory.addItem("Small Potion", 2);
             playerInventory.addItem("Large Potion");
             playerInventory.addItem("Carved Wood Staff");
             playerInventory.addItem("Throwing Knife", 10);
 
             Player.initialize(this);
+            Player.setCanAccessMenu(true);
+            Player.setCanMove(true);
             EnemyManager.initialize();
 
             //MapState mapState = new MapState(this, null, stateManager, map, camera, player);
             TitleState titleState = new TitleState(this, stateManager);
             SplashScreenState splashState = new SplashScreenState(this, stateManager, "splash", titleState);
-            
+
             stateManager.addState(splashState);
         }
 
@@ -185,8 +188,10 @@ namespace SimpleRPG
             {
                 //stateManager.addState(new BattleState(this, null, stateManager));
             }
-            else if (Debug.DEBUGGING && Input.isKeyPressed(Keys.M))
+            else if (Debug.DEBUGGING && Input.isKeyPressed(Keys.F5))
             {
+                stateManager.clear();
+                LoadContent();
             }
 
             base.Update(gameTime);
@@ -222,7 +227,7 @@ namespace SimpleRPG
         public GameState getFirstGameState()
         {
             TileMap map = new TileMap(this, "school");
-            player = Player.getParty()[0].getMapObject();
+            player = Player.getPlayerMapObject();
 
             player.setPosition(2, 4);
             map.addObject(player);
