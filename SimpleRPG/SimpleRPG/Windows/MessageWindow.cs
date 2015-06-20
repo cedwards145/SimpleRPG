@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SimpleRPG.Windows
 {
@@ -30,7 +31,9 @@ namespace SimpleRPG.Windows
         {
             base.update();
             if (opacity >= 1 && messageLength < message.Length)
+            {
                 messageLength++;
+            }
 
             if (Input.isButtonPressed(ControllerButton.enter) && messageLength < message.Length)
                 messageLength = message.Length;

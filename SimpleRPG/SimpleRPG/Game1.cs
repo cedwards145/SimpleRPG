@@ -54,23 +54,32 @@ namespace SimpleRPG
 
         private void loadOptions()
         {
-            XmlTextReader reader = new XmlTextReader("settings.xml");
             string windowStyle = "window";
+            screenHeight = 400;
+            screenWidth = 800;
 
-            while (reader.Read())
+            try
             {
-                if (reader.IsStartElement())
-                {
-                    if (reader.Name == "width")
-                        screenWidth = int.Parse(reader.ReadString());
-                    else if (reader.Name == "height")
-                        screenHeight = int.Parse(reader.ReadString());
-                    else if (reader.Name == "style")
-                        windowStyle = reader.ReadString();
-                }
-            }
+                XmlTextReader reader = new XmlTextReader("settings.xml");
 
-            reader.Close();
+                while (reader.Read())
+                {
+                    if (reader.IsStartElement())
+                    {
+                        if (reader.Name == "width")
+                            screenWidth = int.Parse(reader.ReadString());
+                        else if (reader.Name == "height")
+                            screenHeight = int.Parse(reader.ReadString());
+                        else if (reader.Name == "style")
+                            windowStyle = reader.ReadString();
+                    }
+                }
+
+                reader.Close();
+            } catch (Exception ex)
+            {
+
+            }
 
             // Create a fullscreen window
             if (windowStyle == "fullscreen")

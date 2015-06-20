@@ -22,7 +22,7 @@ namespace SimpleRPG.Tilemap
 
         private RenderTarget2D lightRenderTarget;
 
-        #region Constructors
+        #region Constructors / Destructors
 
         // Read a map PROPERLY from a .tmx XML file
         public TileMap(Game1 game, string filename)

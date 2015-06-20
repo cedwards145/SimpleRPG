@@ -123,6 +123,7 @@
     <Compile Include="Scripts\Script.cs" />
     <Compile Include="Scripts\ScriptArgs.cs" />
     <Compile Include="Scripts\Variables.cs" />
+    <Compile Include="SoundScheme.cs" />
     <Compile Include="SpriteAnimation.cs" />
     <Compile Include="States\CraftingState.cs" />
     <Compile Include="WindowAnimation.cs" />
